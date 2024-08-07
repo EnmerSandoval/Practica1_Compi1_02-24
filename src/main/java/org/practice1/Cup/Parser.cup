@@ -1,0 +1,36 @@
+package org.practice1.Cup;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+import org.practice1.Objects.*;
+import org.practice1.Stats.*;
+
+class Parser;
+
+parser code{:
+    private ArrayList<ErrorL> errors = new ArrayList<ErrorL>();
+    private ArrayList<Figure> figures = new ArrayList<Figure>();
+    private StatsColor statsColor = new StatsColor();
+    private StatsFigure statsFigure = new StatsFigure();
+
+
+:}
+//Terminal Symbols as signs
+terminal PLUS, MINUS, ASTHERISK, DIVISION, LPAREN, RPAREN, COMMA;
+
+//Instructions
+terminal String GRAPH, ANIMATE;
+
+//Colors in String
+terminal String BLUE, RED, YELLOW, GREEN, ORANGE, GOLD, VIOLET, BROWN, BLACK;
+
+//Types of objects to graph
+terminal String CIRCLE, SQUARE, RECTANGLE, POLYGON;
+
+//Types of animations
+terminal String CURVE, LINE;
+
+//Numbers
+terminal String NUMBER;
+
+non terminal ArrayList<Figure> figures;
