@@ -3,10 +3,10 @@ package org.practice1.Objects;
 public class Figure {
 
     private String name;
-    private int x;
-    private int y;
+    private String x;
+    private String y;
     private String color;
-    public Figure(String name, int x, int y, String color) {
+    public Figure(String name, String x, String y, String color) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -21,19 +21,19 @@ public class Figure {
         this.name = name;
     }
 
-    public int getX() {
+    public String getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(String x) {
         this.x = x;
     }
 
-    public int getY() {
+    public String getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(String y) {
         this.y = y;
     }
 

@@ -8,29 +8,236 @@ import org.practice1.Stats.*;
 class Parser;
 
 parser code{:
-    private ArrayList<ErrorL> errors = new ArrayList<ErrorL>();
+
     private ArrayList<Figure> figures = new ArrayList<Figure>();
+    private ArrayList<StatsMath> statsMaths = new ArrayList<StatsMath>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
+
+    public ArrayList<Figure> getFigures(){
+        return this.figures;
+    }
+
+    public ArrayList<StatsMath> getStatsMath(){
+        return this.statsMaths;
+    }
+
+    public StatsColor getStatsColor(){
+        return this.statsColor;
+    }
+
+    public StatsFigure getStatsFigure(){
+        return this.statsFigure;
+    }
 
 
 :}
 //Terminal Symbols as signs
-terminal PLUS, MINUS, ASTHERISK, DIVISION, LPAREN, RPAREN, COMMA;
+terminal PLUS, MINUS, ASTHERISK, DIVISION, LPAREN, RPAREN, COMMA, EQUALS;
 
 //Instructions
-terminal String GRAPH, ANIMATE;
+terminal GRAPH, ANIMATE, OBJECTO, PREVIOUS;
 
-//Colors in String
-terminal String BLUE, RED, YELLOW, GREEN, ORANGE, GOLD, VIOLET, BROWN, BLACK;
+//Colors
+terminal BLUE, RED, YELLOW, GREEN, ORANGE, GOLD, VIOLET, BROWN, BLACK;
 
 //Types of objects to graph
-terminal String CIRCLE, SQUARE, RECTANGLE, POLYGON;
+terminal CIRCLE, SQUARE, RECTANGLE, POLYGON;
 
 //Types of animations
-terminal String CURVE, LINE;
+terminal CURVE, LINE;
 
 //Numbers
-terminal String NUMBER;
+terminal NUMBER, REAL;
 
-non terminal ArrayList<Figure> figures;
+//Name
+terminal NAME;
+
+/* NON TERMINAL*/
+//Strings
+non terminal String colors, expr, expresion_list;
+
+//Object Animation
+non terminal Animation animation;
+non terminal String animations;
+//Figures
+non terminal Figure figures;
+non terminal in;
+
+precedence left PLUS, MINUS;
+precedence left ASTHERISK, DIVISION;
+precedence nonassoc LPAREN;
+
+start with in;
+
+in::=
+          GRAPH figures
+        | ANIMATE animation
+        ;
+
+figures::=
+           CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:radio
+           COMMA colors:color RPAREN
+           {:
+            Circle circle = new Circle(name.toString(), x.toString(), y.toString(), radio.toString(),
+            color.toString());
+            figures.add(circle);
+            statsFigure.setCircle(statsFigure.getCircle()+1);
+            RESULT = circle;
+           :}
+         | SQUARE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:lade
+           COMMA colors:color RPAREN
+           {:
+            Square square = new Square(name.toString(), x.toString(), y.toString(), lade.toString(),
+            color.toString());
+            figures.add(square);
+            statsFigure.setSquare(statsFigure.getSquare()+1);
+            RESULT = square;
+           :}
+
+         | RECTANGLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA
+           expresion_list:high COMMA expresion_list:wide COMMA colors:color RPAREN
+           {:
+            Rectangle rectangle = new Rectangle(name.toString(), x.toString(), y.toString(), high.toString(),
+            wide.toString(), color.toString());
+            figures.add(rectangle);
+            statsFigure.setRectangle(statsFigure.getRectangle()+1);
+            RESULT = rectangle;
+           :}
+
+         | LINE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:x2
+           COMMA expresion_list:y2 COMMA colors:color RPAREN
+           {:
+             Line lineResult = new Line(name.toString(), x.toString(), y.toString(), x2.toString(), y2.toString(),
+             color.toString());
+             figures.add(lineResult);
+             statsFigure.setLine(statsFigure.getLine()+1);
+             RESULT = lineResult;
+           :}
+
+         | POLYGON LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA
+           expresion_list:counterLades COMMA expresion_list:high COMMA expresion_list:wide COMMA
+           colors:color RPAREN
+           {:
+             Polygon polygon = new Polygon(name.toString(), x.toString(), y.toString(),
+             counterLades.toString(), high.toString(), wide.toString(), color.toString());
+             figures.add(polygon);
+             statsFigure.setPolygon(statsFigure.getPolygon()+1);
+             RESULT = polygon;
+           :}
+         ;
+
+animation::= OBJECTO PREVIOUS LPAREN animations:animations COMMA expresion_list:x COMMA expresion_list:y
+             COMMA expresion_list:order RPAREN
+             {:Animation animationResult = new Animation(animations.toString(), x.toString(), y.toString(), order.toString());
+               RESULT = animationResult;
+             :}
+             ;
+
+animations::= LINE:line
+              {:
+                statsFigure.setLineAnimation(statsFigure.getLineAnimation()+1);
+                RESULT = line.toString();
+              :}
+            | CURVE:curve
+              {:
+                statsFigure.setCurveAnimation(statsFigure.getCurveAnimation()+1);
+                RESULT = curve.toString();
+              :}
+            ;
+
+expresion_list::= expresion_list:exprlist PLUS expr:expr            {:RESULT = exprlist.toString() + "+" + expr.toString();:}
+                | expresion_list:exprlist MINUS expr:expr           {:RESULT = exprlist.toString() + "-" + expr.toString();:}
+                | expresion_list:exprlist ASTHERISK expr:expr       {:RESULT = exprlist.toString() + "*" + expr.toString();:}
+                | expresion_list:exprlist DIVISION expr:expr        {:RESULT = exprlist.toString() + "/" + expr.toString();:}
+                | expresion_list:exprlist EQUALS expr:expr          {:RESULT = exprlist.toString() + "=" + expr.toString();:}
+                | expr:expr                                         {:RESULT = expr.toString();:}
+                ;
+
+expr::= expr:expr1 PLUS:PLUS expr:expr2
+        {:
+            int line = ((Symbol)PLUS).left;
+            int column = ((Symbol)PLUS).right;
+            String occurrence = expr1.toString() + "+" + expr2.toString();
+            StatsMath statsMath = new StatsMath("+", ""+line, ""+column, occurrence);
+            statsMaths.add(statsMath);
+            RESULT = occurrence;
+        :}
+      | expr:expr1 MINUS:MINUS expr:expr2
+        {:
+            int line = ((Symbol)MINUS).left;
+            int column = ((Symbol)MINUS).right;
+            String occurrence = expr1.toString() + "-" + expr2.toString();
+            StatsMath statsMath = new StatsMath("-", ""+line, ""+column, occurrence);
+            statsMaths.add(statsMath);
+            RESULT = occurrence;
+        :}
+      | expr:expr1 ASTHERISK:ASTHERISK expr:expr2
+        {:
+            int line = ((Symbol)ASTHERISK).left;
+            int column = ((Symbol)ASTHERISK).right;
+            String occurrence = expr1.toString() + "*" + expr2.toString();
+            StatsMath statsMath = new StatsMath("*", ""+line, ""+column, occurrence);
+            statsMaths.add(statsMath);
+            RESULT = occurrence;
+        :}
+      | expr:expr1 DIVISION:DIVISION expr:expr2
+        {:
+            int line = ((Symbol)DIVISION).left;
+            int column = ((Symbol)DIVISION).right;
+            String occurrence = expr1.toString() + "/" + expr2.toString();
+            StatsMath statsMath = new StatsMath("/", ""+line, ""+column, occurrence);
+            statsMaths.add(statsMath);
+            RESULT = occurrence;
+        :}
+      | LPAREN expr:expr RPAREN             {:RESULT = "(" + expr.toString() + ")";:}
+      | NUMBER:number                       {:RESULT = number.toString();:}
+      | REAL:real                           {:RESULT = real.toString();:}
+      ;
+
+colors::= BLUE:blue
+          {:
+            statsColor.setBlue(statsColor.getBlue()+1);
+            RESULT = blue.toString();
+          :}
+        | RED:red
+          {:
+            statsColor.setRed(statsColor.getRed()+1);
+            RESULT = red.toString();
+          :}
+        | YELLOW:yellow
+          {:
+            statsColor.setYellow(statsColor.getYellow()+1);
+            RESULT = yellow.toString();
+          :}
+        | GREEN:green
+          {:
+            statsColor.setGreen(statsColor.getGreen()+1);
+            RESULT = green.toString();
+          :}
+        | ORANGE:orange
+          {:
+            statsColor.setOrange(statsColor.getOrange()+1);
+            RESULT = orange.toString();
+          :}
+        | GOLD:gold
+          {:
+            statsColor.setGold(statsColor.getGold()+1);
+            RESULT = gold.toString();
+          :}
+        | VIOLET:violet
+          {:
+            statsColor.setViolet(statsColor.getViolet()+1);
+            RESULT = violet.toString();
+          :}
+        | BROWN:brown
+          {:
+            statsColor.setBrown(statsColor.getBrown()+1);
+            RESULT = brown.toString();
+          :}
+        | BLACK:black
+          {:
+            statsColor.setBlack(statsColor.getBlack()+1);
+            RESULT = black.toString();
+          :}
+        ;

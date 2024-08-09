@@ -1,18 +1,18 @@
 package org.practice1.Objects;
 
 public class Circle extends Figure{
-    private int radio;
+    private String radio;
 
-    public Circle(String name, int x, int y, int radio,  String color) {
+    public Circle(String name, String x, String y, String radio,  String color) {
         super(name, x, y, color);
         this.radio = radio;
     }
 
-    public int getRadio() {
+    public String getRadio() {
         return radio;
     }
 
-    public void setRadio(int radio) {
+    public void setRadio(String radio) {
         this.radio = radio;
     }
 }

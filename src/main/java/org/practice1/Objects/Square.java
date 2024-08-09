@@ -2,18 +2,18 @@ package org.practice1.Objects;
 
 public class Square extends Figure{
 
-    private int lade;
+    private String lade;
 
-    public Square(String name, int x, int y, int lade, String color) {
+    public Square(String name, String x, String y, String lade, String color) {
         super(name, x, y, color);
         this.lade = lade;
     }
 
-    public int getLade() {
+    public String getLade() {
         return lade;
     }
 
-    public void setLade(int lade) {
+    public void setLade(String lade) {
         this.lade = lade;
     }
 }
