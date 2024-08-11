@@ -12,24 +12,24 @@ public class Polygon extends Figure{
         this.wide = wide;
     }
 
-    public String getNumberLades() {
-        return numberLades;
+    public int getNumberLades() {
+        return convertStringToInteger(numberLades);
     }
 
     public void setNumberLades(String numberLades) {
         this.numberLades = numberLades;
     }
 
-    public String getHigh() {
-        return high;
+    public int getHigh() {
+        return convertStringToInteger(high);
     }
 
     public void setHigh(String high) {
         this.high = high;
     }
 
-    public String getWide() {
-        return wide;
+    public int getWide() {
+        return convertStringToInteger(wide);
     }
 
     public void setWide(String wide) {

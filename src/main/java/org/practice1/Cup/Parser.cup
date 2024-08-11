@@ -31,6 +31,17 @@ parser code{:
         return this.statsFigure;
     }
 
+        public void syntax_error(Symbol s){
+            System.out.println("Error Sintáctico en la Línea " + (s.left) +
+            " Columna "+s.right+ ". No se esperaba este componente: " +s.value+".");
+        }
+
+
+        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+            System.out.println("Error síntactico irrecuperable en la Línea " +
+            (s.left)+ " Columna "+s.right+". Componente " + s.value +
+            " no reconocido.");
+        }
 
 :}
 //Terminal Symbols as signs
@@ -71,13 +82,11 @@ precedence nonassoc LPAREN;
 
 start with in;
 
-in::=
-          GRAPH figures
-        | ANIMATE animation
-        ;
+in::= GRAPH figures
+    | ANIMATE animation
+    ;
 
-figures::=
-           CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:radio
+figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:radio
            COMMA colors:color RPAREN
            {:
             Circle circle = new Circle(name.toString(), x.toString(), y.toString(), radio.toString(),

@@ -8,15 +8,26 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.practice1.Cup.Parser;
+import org.practice1.Lexer.Lexer;
+import org.practice1.Objects.*;
+import org.practice1.Stats.*;
+
 
 /**
  *
  * @author laptop
  */
 public class ViewAnalyzer extends javax.swing.JFrame {
-
+    private ArrayList<Figure> figures = new ArrayList<>();
+    private ArrayList<StatsMath> statsMaths = new ArrayList<>();
+    private StatsColor statsColor = new StatsColor();
+    private StatsFigure statsFigure = new StatsFigure();
+    
     /**
      * Creates new form ViewAnalyzer
      */
@@ -36,7 +47,7 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         labelConsole = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        buttonCompiler = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
@@ -67,7 +78,12 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         labelConsole.setFont(new java.awt.Font("Rockwell Extra Bold", 1, 24)); // NOI18N
         labelConsole.setText("Consola");
 
-        jButton1.setText("Compilar");
+        buttonCompiler.setText("Compilar");
+        buttonCompiler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCompilerActionPerformed(evt);
+            }
+        });
 
         jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
@@ -130,7 +146,7 @@ public class ViewAnalyzer extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelConsole)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonCompiler, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(59, 59, 59))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,7 +171,7 @@ public class ViewAnalyzer extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonCompiler, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelConsole))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,6 +200,27 @@ public class ViewAnalyzer extends javax.swing.JFrame {
             } 
         }
     }//GEN-LAST:event_itemUploadFileActionPerformed
+
+    private void buttonCompilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCompilerActionPerformed
+        // TODO add your handling code here:
+        try{
+            Lexer lex = new Lexer(new StringReader(textArea.getText()));
+            Parser sintax = new Parser(lex);
+            System.out.println(sintax.parse());
+            figures = sintax.getFigures();
+            statsMaths = sintax.getStatsMath();
+            statsColor = sintax.getStatsColor();
+            statsFigure = sintax.getStatsFigure();
+            
+            if(!figures.isEmpty()){
+                for (int i = 0; i < figures.size(); i++) {
+                    System.out.println(figures.get(i).toString());
+                }
+            }
+        }catch(Exception ex){
+        
+        }
+    }//GEN-LAST:event_buttonCompilerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,6 +258,7 @@ public class ViewAnalyzer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonCompiler;
     private javax.swing.JMenuItem itemAnimationsUsed;
     private javax.swing.JMenuItem itemColorUsed;
     private javax.swing.JMenuItem itemErrors;
@@ -229,7 +267,6 @@ public class ViewAnalyzer extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemOccurrence;
     private javax.swing.JMenuItem itemSaveFile;
     private javax.swing.JMenuItem itemUploadFile;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;

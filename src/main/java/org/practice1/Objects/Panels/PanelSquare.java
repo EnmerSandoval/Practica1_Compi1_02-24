@@ -10,7 +10,7 @@ public class PanelSquare extends JPanel {
 
     public PanelSquare(Square square) {
         this.square = square;
-        this.setPreferredSize(new java.awt.Dimension(square.convertStringToInteger(square.getLade()), square.convertStringToInteger(square.getLade())));
+        this.setPreferredSize(new java.awt.Dimension(square.getLade(), square.getLade()));
     }
 
     @Override
@@ -18,6 +18,15 @@ public class PanelSquare extends JPanel {
         super.paintComponent(g);
         Color color = square.returnColor(square.getColor());
         g.setColor(color);
-        g.fillRect(square.getX(), square.getY(), square.convertStringToInteger(square.getLade()),square.convertStringToInteger(square.getLade()));
+        g.fillRect(square.getX(), square.getY(), square.getLade(),square.getLade());
+
+        FontMetrics fm = g.getFontMetrics();
+        int width = fm.stringWidth(square.getName());
+        int height = fm.getHeight();
+
+        int x = square.getX() + (width / 2);
+        int y = square.getY() + (height / 2);
+
+        g.drawString(square.getName(), x, y);
     }
 }

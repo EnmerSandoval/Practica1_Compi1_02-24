@@ -13,8 +13,8 @@ public class Square extends Figure{
         this.lade = lade;
     }
 
-    public String getLade() {
-        return lade;
+    public int getLade() {
+        return convertStringToInteger(lade);
     }
 
     public void setLade(String lade) {

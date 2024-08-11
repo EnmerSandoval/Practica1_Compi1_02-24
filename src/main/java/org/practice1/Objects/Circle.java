@@ -9,8 +9,8 @@ public class Circle extends Figure{
         this.radio = radio;
     }
 
-    public String getRadio() {
-        return radio;
+    public int getRadio() {
+        return convertStringToInteger(radio);
     }
 
     public void setRadio(String radio) {
@@ -23,5 +23,9 @@ public class Circle extends Figure{
 
     public int returnHeight(int radio){
         return ((Double) (getPi()*radio*radio)).intValue();
+    }
+
+    public int getDiameter(int radio){
+        return getRadio()*getRadio();
     }
 }

@@ -10,16 +10,16 @@ public class Rectangle extends Figure{
         this.wide = wide;
     }
 
-    public String getHigh() {
-        return high;
+    public int getHigh() {
+        return convertStringToInteger(high);
     }
 
     public void setHigh(String high) {
         this.high = high;
     }
 
-    public String getWide() {
-        return wide;
+    public int getWide() {
+        return convertStringToInteger(wide);
     }
 
     public void setWide(String wide) {
