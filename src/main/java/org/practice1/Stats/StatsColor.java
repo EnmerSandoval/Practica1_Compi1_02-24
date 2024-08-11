@@ -1,7 +1,7 @@
 package org.practice1.Stats;
 
 public class StatsColor {
-    private int blue, red, yellow, green, orange, gold, violet, brown, black;
+    private int blue, red, yellow, green, orange, gray, cyan, pink, black;
 
     public StatsColor() {
         blue = 0;
@@ -9,9 +9,9 @@ public class StatsColor {
         yellow = 0;
         green = 0;
         orange = 0;
-        gold = 0;
-        violet = 0;
-        brown = 0;
+        gray = 0;
+        cyan = 0;
+        pink = 0;
         black = 0;
     }
 
@@ -55,28 +55,28 @@ public class StatsColor {
         this.orange = orange;
     }
 
-    public int getGold() {
-        return gold;
+    public int getGray() {
+        return gray;
     }
 
-    public void setGold(int gold) {
-        this.gold = gold;
+    public void setGray(int gray) {
+        this.gray = gray;
     }
 
-    public int getViolet() {
-        return violet;
+    public int getCyan() {
+        return cyan;
     }
 
-    public void setViolet(int violet) {
-        this.violet = violet;
+    public void setCyan(int cyan) {
+        this.cyan = cyan;
     }
 
-    public int getBrown() {
-        return brown;
+    public int getPink() {
+        return pink;
     }
 
-    public void setBrown(int brown) {
-        this.brown = brown;
+    public void setPink(int pink) {
+        this.pink = pink;
     }
 
     public int getBlack() {

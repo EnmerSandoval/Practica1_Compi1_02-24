@@ -46,9 +46,9 @@ GREEN           = "verde"
 
 //Los colores a discrecion
 ORANGE          = "naranja"
-GOLD            = "oro"
-VIOLET          = "violeta"
-BROWN           = "cafe"
+GRAY            = "gris"
+CYAN            = "celeste"
+PINK            = "rosado"
 BLACK           = "negro"
 
 //Types of animation
@@ -110,9 +110,9 @@ COMMA           = ","
 {YELLOW}                 {return new Symbol(ParserSym.YELLOW, yytext());}
 {GREEN}                  {return new Symbol(ParserSym.GREEN, yytext());}
 {ORANGE}                 {return new Symbol(ParserSym.ORANGE, yytext());}
-{GOLD}                   {return new Symbol(ParserSym.GOLD, yytext());}
-{VIOLET}                 {return new Symbol(ParserSym.VIOLET, yytext());}
-{BROWN}                  {return new Symbol(ParserSym.BROWN, yytext());}
+{GRAY}                   {return new Symbol(ParserSym.GRAY, yytext());}
+{CYAN}                   {return new Symbol(ParserSym.CYAN, yytext());}
+{PINK}                   {return new Symbol(ParserSym.PINK, yytext());}
 {BLACK}                  {return new Symbol(ParserSym.BLACK, yytext());}
 
 //Type Animations

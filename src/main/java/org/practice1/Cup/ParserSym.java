@@ -13,8 +13,10 @@ public class ParserSym {
   public static final int PLUS = 2;
   public static final int RPAREN = 7;
   public static final int CURVE = 27;
+  public static final int GRAY = 19;
   public static final int BLACK = 22;
   public static final int DIVISION = 5;
+  public static final int PINK = 21;
   public static final int CIRCLE = 23;
   public static final int ASTHERISK = 4;
   public static final int NAME = 31;
@@ -26,11 +28,10 @@ public class ParserSym {
   public static final int COMMA = 8;
   public static final int NUMBER = 29;
   public static final int EOF = 0;
-  public static final int BROWN = 21;
   public static final int ORANGE = 18;
   public static final int RECTANGLE = 25;
+  public static final int CYAN = 20;
   public static final int GRAPH = 10;
-  public static final int GOLD = 19;
   public static final int MINUS = 3;
   public static final int error = 1;
   public static final int OBJECTO = 12;
@@ -39,7 +40,6 @@ public class ParserSym {
   public static final int YELLOW = 16;
   public static final int ANIMATE = 11;
   public static final int REAL = 30;
-  public static final int VIOLET = 20;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -60,9 +60,9 @@ public class ParserSym {
   "YELLOW",
   "GREEN",
   "ORANGE",
-  "GOLD",
-  "VIOLET",
-  "BROWN",
+  "GRAY",
+  "CYAN",
+  "PINK",
   "BLACK",
   "CIRCLE",
   "SQUARE",

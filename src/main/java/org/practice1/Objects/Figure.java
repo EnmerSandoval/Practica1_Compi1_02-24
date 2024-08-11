@@ -1,5 +1,10 @@
 package org.practice1.Objects;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.awt.*;
+
 public class Figure {
 
     private String name;
@@ -30,16 +35,16 @@ public class Figure {
         this.name = name;
     }
 
-    public String getX() {
-        return x;
+    public int getX() {
+        return convertStringToInteger(this.x);
     }
 
     public void setX(String x) {
         this.x = x;
     }
 
-    public String getY() {
-        return y;
+    public int getY() {
+        return convertStringToInteger(this.y);
     }
 
     public void setY(String y) {
@@ -60,6 +65,44 @@ public class Figure {
 
     public void setAnimation(Animation animation) {
         this.animation = animation;
+    }
+
+    public int convertStringToInteger(String str){
+        ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+        ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
+
+        try {
+            Object result = scriptEngine.eval(str);
+            return ((Double) result).intValue();
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public Color returnColor(String color){
+        switch (color){
+            case "azul":
+                return Color.BLUE;
+            case "rojo":
+                return Color.RED;
+            case "amarillo":
+                return Color.YELLOW;
+            case "verde":
+                return Color.GREEN;
+            case "naranja":
+                return Color.ORANGE;
+            case "gris":
+                return Color.GRAY;
+            case "morado":
+                return Color.CYAN;
+            case "cafe":
+                return Color.PINK;
+            case "negro":
+                return Color.BLACK;
+            default:
+                return Color.BLACK;
+        }
     }
 }
 

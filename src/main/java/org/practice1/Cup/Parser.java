@@ -101,12 +101,12 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\004\041\005\043\006\037\007\042\012\071\013\040\001" +
     "\002\000\010\010\022\037\021\040\017\001\002\000\016" +
     "\004\041\005\043\006\037\007\042\012\073\013\040\001" +
-    "\002\000\024\020\102\021\104\022\103\023\074\024\101" +
-    "\025\076\026\077\027\100\030\105\001\002\000\004\011" +
-    "\uffe6\001\002\000\004\011\106\001\002\000\004\011\uffe4" +
-    "\001\002\000\004\011\uffe3\001\002\000\004\011\uffe2\001" +
-    "\002\000\004\011\uffe5\001\002\000\004\011\uffe9\001\002" +
-    "\000\004\011\uffe7\001\002\000\004\011\uffe8\001\002\000" +
+    "\002\000\024\020\100\021\103\022\101\023\074\024\076" +
+    "\025\102\026\104\027\077\030\105\001\002\000\004\011" +
+    "\uffe6\001\002\000\004\011\106\001\002\000\004\011\uffe5" +
+    "\001\002\000\004\011\uffe2\001\002\000\004\011\uffe9\001" +
+    "\002\000\004\011\uffe7\001\002\000\004\011\uffe4\001\002" +
+    "\000\004\011\uffe8\001\002\000\004\011\uffe3\001\002\000" +
     "\004\011\uffe1\001\002\000\004\002\ufffd\001\002\000\004" +
     "\041\110\001\002\000\004\012\111\001\002\000\010\010" +
     "\022\037\021\040\017\001\002\000\016\004\041\005\043" +
@@ -117,8 +117,8 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\006\037\007\042\012\117\013\040\001\002\000\010\010" +
     "\022\037\021\040\017\001\002\000\016\004\041\005\043" +
     "\006\037\007\042\012\121\013\040\001\002\000\024\020" +
-    "\102\021\104\022\103\023\074\024\101\025\076\026\077" +
-    "\027\100\030\105\001\002\000\004\011\123\001\002\000" +
+    "\100\021\103\022\101\023\074\024\076\025\102\026\104" +
+    "\027\077\030\105\001\002\000\004\011\123\001\002\000" +
     "\004\002\ufffb\001\002\000\004\041\125\001\002\000\004" +
     "\012\126\001\002\000\010\010\022\037\021\040\017\001" +
     "\002\000\016\004\041\005\043\006\037\007\042\012\130" +
@@ -126,8 +126,8 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\002\000\016\004\041\005\043\006\037\007\042\012\132" +
     "\013\040\001\002\000\010\010\022\037\021\040\017\001" +
     "\002\000\016\004\041\005\043\006\037\007\042\012\134" +
-    "\013\040\001\002\000\024\020\102\021\104\022\103\023" +
-    "\074\024\101\025\076\026\077\027\100\030\105\001\002" +
+    "\013\040\001\002\000\024\020\100\021\103\022\101\023" +
+    "\074\024\076\025\102\026\104\027\077\030\105\001\002" +
     "\000\004\011\136\001\002\000\004\002\ufffe\001\002\000" +
     "\004\041\140\001\002\000\004\012\141\001\002\000\010" +
     "\010\022\037\021\040\017\001\002\000\016\004\041\005" +
@@ -140,8 +140,8 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\043\006\037\007\042\012\151\013\040\001\002\000\010" +
     "\010\022\037\021\040\017\001\002\000\016\004\041\005" +
     "\043\006\037\007\042\012\153\013\040\001\002\000\024" +
-    "\020\102\021\104\022\103\023\074\024\101\025\076\026" +
-    "\077\027\100\030\105\001\002\000\004\011\155\001\002" +
+    "\020\100\021\103\022\101\023\074\024\076\025\102\026" +
+    "\104\027\077\030\105\001\002\000\004\011\155\001\002" +
     "\000\004\002\ufffa\001\002\000\004\041\157\001\002\000" +
     "\004\012\160\001\002\000\010\010\022\037\021\040\017" +
     "\001\002\000\016\004\041\005\043\006\037\007\042\012" +
@@ -151,8 +151,8 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\001\002\000\016\004\041\005\043\006\037\007\042\012" +
     "\166\013\040\001\002\000\010\010\022\037\021\040\017" +
     "\001\002\000\016\004\041\005\043\006\037\007\042\012" +
-    "\170\013\040\001\002\000\024\020\102\021\104\022\103" +
-    "\023\074\024\101\025\076\026\077\027\100\030\105\001" +
+    "\170\013\040\001\002\000\024\020\100\021\103\022\101" +
+    "\023\074\024\076\025\102\026\104\027\077\030\105\001" +
     "\002\000\004\011\172\001\002\000\004\002\ufffc\001\002" +
     "\000\004\002\001\001\002" });
 
@@ -253,6 +253,7 @@ public class Parser extends java_cup.runtime.lr_parser {
     private ArrayList<StatsMath> statsMaths = new ArrayList<StatsMath>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
+    private Figure previousFigure = new Figure();
 
     public ArrayList<Figure> getFigures(){
         return this.figures;
@@ -352,6 +353,7 @@ class CUP$Parser$actions {
             Circle circle = new Circle(name.toString(), x.toString(), y.toString(), radio.toString(),
             color.toString());
             figures.add(circle);
+            previousFigure = circle;
             statsFigure.setCircle(statsFigure.getCircle()+1);
             RESULT = circle;
            
@@ -382,6 +384,7 @@ class CUP$Parser$actions {
             Square square = new Square(name.toString(), x.toString(), y.toString(), lade.toString(),
             color.toString());
             figures.add(square);
+            previousFigure = square;
             statsFigure.setSquare(statsFigure.getSquare()+1);
             RESULT = square;
            
@@ -415,6 +418,7 @@ class CUP$Parser$actions {
             Rectangle rectangle = new Rectangle(name.toString(), x.toString(), y.toString(), high.toString(),
             wide.toString(), color.toString());
             figures.add(rectangle);
+            previousFigure = rectangle;
             statsFigure.setRectangle(statsFigure.getRectangle()+1);
             RESULT = rectangle;
            
@@ -448,6 +452,7 @@ class CUP$Parser$actions {
              Line lineResult = new Line(name.toString(), x.toString(), y.toString(), x2.toString(), y2.toString(),
              color.toString());
              figures.add(lineResult);
+             previousFigure = lineResult;
              statsFigure.setLine(statsFigure.getLine()+1);
              RESULT = lineResult;
            
@@ -484,6 +489,7 @@ class CUP$Parser$actions {
              Polygon polygon = new Polygon(name.toString(), x.toString(), y.toString(),
              counterLades.toString(), high.toString(), wide.toString(), color.toString());
              figures.add(polygon);
+             previousFigure = polygon;
              statsFigure.setPolygon(statsFigure.getPolygon()+1);
              RESULT = polygon;
            
@@ -508,6 +514,12 @@ class CUP$Parser$actions {
 		int orderright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		String order = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		Animation animationResult = new Animation(animations.toString(), x.toString(), y.toString(), order.toString());
+                if(previousFigure != null){
+                    previousFigure.setAnimation(animationResult);
+                    previousFigure = null;
+                } else {
+                    System.out.println("No existe un objeto anterior");
+                }
                RESULT = animationResult;
              
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("animation",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -843,45 +855,45 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 29: // colors ::= GOLD 
+          case 29: // colors ::= GRAY 
             {
               String RESULT =null;
-		int goldleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
-		int goldright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Object gold = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		int grayleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int grayright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object gray = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-            statsColor.setGold(statsColor.getGold()+1);
-            RESULT = gold.toString();
+            statsColor.setGray(statsColor.getGray()+1);
+            RESULT = gray.toString();
           
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("colors",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 30: // colors ::= VIOLET 
+          case 30: // colors ::= CYAN 
             {
               String RESULT =null;
-		int violetleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
-		int violetright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Object violet = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		int cyanleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int cyanright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object cyan = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-            statsColor.setViolet(statsColor.getViolet()+1);
-            RESULT = violet.toString();
+            statsColor.setCyan(statsColor.getCyan()+1);
+            RESULT = cyan.toString();
           
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("colors",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 31: // colors ::= BROWN 
+          case 31: // colors ::= PINK 
             {
               String RESULT =null;
-		int brownleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
-		int brownright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Object brown = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		int pinkleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int pinkright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object pink = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-            statsColor.setBrown(statsColor.getBrown()+1);
-            RESULT = brown.toString();
+            statsColor.setPink(statsColor.getPink()+1);
+            RESULT = pink.toString();
           
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("colors",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }

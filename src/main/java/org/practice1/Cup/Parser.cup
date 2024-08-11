@@ -40,7 +40,7 @@ terminal PLUS, MINUS, ASTHERISK, DIVISION, LPAREN, RPAREN, COMMA, EQUALS;
 terminal GRAPH, ANIMATE, OBJECTO, PREVIOUS;
 
 //Colors
-terminal BLUE, RED, YELLOW, GREEN, ORANGE, GOLD, VIOLET, BROWN, BLACK;
+terminal BLUE, RED, YELLOW, GREEN, ORANGE, GRAY, CYAN, PINK, BLACK;
 
 //Types of objects to graph
 terminal CIRCLE, SQUARE, RECTANGLE, POLYGON;
@@ -232,20 +232,20 @@ colors::= BLUE:blue
             statsColor.setOrange(statsColor.getOrange()+1);
             RESULT = orange.toString();
           :}
-        | GOLD:gold
+        | GRAY:gray
           {:
-            statsColor.setGold(statsColor.getGold()+1);
-            RESULT = gold.toString();
+            statsColor.setGray(statsColor.getGray()+1);
+            RESULT = gray.toString();
           :}
-        | VIOLET:violet
+        | CYAN:cyan
           {:
-            statsColor.setViolet(statsColor.getViolet()+1);
-            RESULT = violet.toString();
+            statsColor.setCyan(statsColor.getCyan()+1);
+            RESULT = cyan.toString();
           :}
-        | BROWN:brown
+        | PINK:pink
           {:
-            statsColor.setBrown(statsColor.getBrown()+1);
-            RESULT = brown.toString();
+            statsColor.setPink(statsColor.getPink()+1);
+            RESULT = pink.toString();
           :}
         | BLACK:black
           {:

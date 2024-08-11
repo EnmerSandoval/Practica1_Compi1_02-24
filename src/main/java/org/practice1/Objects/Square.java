@@ -1,5 +1,9 @@
 package org.practice1.Objects;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 public class Square extends Figure{
 
     private String lade;
@@ -16,4 +20,6 @@ public class Square extends Figure{
     public void setLade(String lade) {
         this.lade = lade;
     }
+
+
 }
