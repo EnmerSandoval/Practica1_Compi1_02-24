@@ -13,6 +13,7 @@ parser code{:
     private ArrayList<StatsMath> statsMaths = new ArrayList<StatsMath>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
+    private Figure previousFigure = new Figure();
 
     public ArrayList<Figure> getFigures(){
         return this.figures;
@@ -82,6 +83,7 @@ figures::=
             Circle circle = new Circle(name.toString(), x.toString(), y.toString(), radio.toString(),
             color.toString());
             figures.add(circle);
+            previousFigure = circle;
             statsFigure.setCircle(statsFigure.getCircle()+1);
             RESULT = circle;
            :}
@@ -91,6 +93,7 @@ figures::=
             Square square = new Square(name.toString(), x.toString(), y.toString(), lade.toString(),
             color.toString());
             figures.add(square);
+            previousFigure = square;
             statsFigure.setSquare(statsFigure.getSquare()+1);
             RESULT = square;
            :}
@@ -101,6 +104,7 @@ figures::=
             Rectangle rectangle = new Rectangle(name.toString(), x.toString(), y.toString(), high.toString(),
             wide.toString(), color.toString());
             figures.add(rectangle);
+            previousFigure = rectangle;
             statsFigure.setRectangle(statsFigure.getRectangle()+1);
             RESULT = rectangle;
            :}
@@ -111,6 +115,7 @@ figures::=
              Line lineResult = new Line(name.toString(), x.toString(), y.toString(), x2.toString(), y2.toString(),
              color.toString());
              figures.add(lineResult);
+             previousFigure = lineResult;
              statsFigure.setLine(statsFigure.getLine()+1);
              RESULT = lineResult;
            :}
@@ -122,6 +127,7 @@ figures::=
              Polygon polygon = new Polygon(name.toString(), x.toString(), y.toString(),
              counterLades.toString(), high.toString(), wide.toString(), color.toString());
              figures.add(polygon);
+             previousFigure = polygon;
              statsFigure.setPolygon(statsFigure.getPolygon()+1);
              RESULT = polygon;
            :}
@@ -130,6 +136,12 @@ figures::=
 animation::= OBJECTO PREVIOUS LPAREN animations:animations COMMA expresion_list:x COMMA expresion_list:y
              COMMA expresion_list:order RPAREN
              {:Animation animationResult = new Animation(animations.toString(), x.toString(), y.toString(), order.toString());
+                if(previousFigure != null){
+                    previousFigure.setAnimation(animationResult);
+                    previousFigure = null;
+                } else {
+                    System.out.println("No existe un objeto anterior");
+                }
                RESULT = animationResult;
              :}
              ;
