@@ -32,8 +32,8 @@ parser code{:
     }
 
         public void syntax_error(Symbol s){
-            System.out.println("Error Sintáctico en la Línea " + (s.left) +
-            " Columna "+s.right+ ". No se esperaba este componente: " +s.value+".");
+            System.out.println("Error Sintáctico en la Línea " + (s.right) +
+            " Columna "+s.left+ ". No se esperaba este componente: " +s.value+".");
         }
 
 
@@ -60,14 +60,16 @@ terminal CIRCLE, SQUARE, RECTANGLE, POLYGON;
 terminal CURVE, LINE;
 
 //Numbers
-terminal NUMBER, REAL;
+terminal String NUMBER;
+terminal String REAL;
 
 //Name
 terminal NAME;
 
 /* NON TERMINAL*/
 //Strings
-non terminal String colors, expr, expresion_list;
+non terminal String colors;
+non terminal Integer expr, expresion_list;
 
 //Object Animation
 non terminal Animation animation;
@@ -78,19 +80,18 @@ non terminal in;
 
 precedence left PLUS, MINUS;
 precedence left ASTHERISK, DIVISION;
-precedence nonassoc LPAREN;
 
 start with in;
 
-in::= GRAPH figures
-    | ANIMATE animation
+in::= GRAPH figures in
+    | ANIMATE animation in
+    | //vacio
     ;
 
 figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:radio
            COMMA colors:color RPAREN
            {:
-            Circle circle = new Circle(name.toString(), x.toString(), y.toString(), radio.toString(),
-            color.toString());
+            Circle circle = new Circle(name.toString(), x, y, radio, color.toString());
             figures.add(circle);
             previousFigure = circle;
             statsFigure.setCircle(statsFigure.getCircle()+1);
@@ -99,8 +100,7 @@ figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y
          | SQUARE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:lade
            COMMA colors:color RPAREN
            {:
-            Square square = new Square(name.toString(), x.toString(), y.toString(), lade.toString(),
-            color.toString());
+            Square square = new Square(name.toString(), x, y, lade, color.toString());
             figures.add(square);
             previousFigure = square;
             statsFigure.setSquare(statsFigure.getSquare()+1);
@@ -110,8 +110,7 @@ figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y
          | RECTANGLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA
            expresion_list:high COMMA expresion_list:wide COMMA colors:color RPAREN
            {:
-            Rectangle rectangle = new Rectangle(name.toString(), x.toString(), y.toString(), high.toString(),
-            wide.toString(), color.toString());
+            Rectangle rectangle = new Rectangle(name.toString(), x, y, high, wide, color.toString());
             figures.add(rectangle);
             previousFigure = rectangle;
             statsFigure.setRectangle(statsFigure.getRectangle()+1);
@@ -121,8 +120,7 @@ figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y
          | LINE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:x2
            COMMA expresion_list:y2 COMMA colors:color RPAREN
            {:
-             Line lineResult = new Line(name.toString(), x.toString(), y.toString(), x2.toString(), y2.toString(),
-             color.toString());
+             Line lineResult = new Line(name.toString(), x, y, x2, y2, color.toString());
              figures.add(lineResult);
              previousFigure = lineResult;
              statsFigure.setLine(statsFigure.getLine()+1);
@@ -133,8 +131,7 @@ figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y
            expresion_list:counterLades COMMA expresion_list:high COMMA expresion_list:wide COMMA
            colors:color RPAREN
            {:
-             Polygon polygon = new Polygon(name.toString(), x.toString(), y.toString(),
-             counterLades.toString(), high.toString(), wide.toString(), color.toString());
+             Polygon polygon = new Polygon(name.toString(), x, y, counterLades, high, wide, color.toString());
              figures.add(polygon);
              previousFigure = polygon;
              statsFigure.setPolygon(statsFigure.getPolygon()+1);
@@ -167,53 +164,51 @@ animations::= LINE:line
               :}
             ;
 
-expresion_list::= expresion_list:exprlist PLUS expr:expr            {:RESULT = exprlist.toString() + "+" + expr.toString();:}
-                | expresion_list:exprlist MINUS expr:expr           {:RESULT = exprlist.toString() + "-" + expr.toString();:}
-                | expresion_list:exprlist ASTHERISK expr:expr       {:RESULT = exprlist.toString() + "*" + expr.toString();:}
-                | expresion_list:exprlist DIVISION expr:expr        {:RESULT = exprlist.toString() + "/" + expr.toString();:}
-                | expresion_list:exprlist EQUALS expr:expr          {:RESULT = exprlist.toString() + "=" + expr.toString();:}
-                | expr:expr                                         {:RESULT = expr.toString();:}
-                ;
+expresion_list::= expr:expr {:RESULT = expr;:};
 
-expr::= expr:expr1 PLUS:PLUS expr:expr2
+
+expr::= LPAREN expr:expr RPAREN            {: RESULT = expr; :}
+      |  expr:expr1 PLUS:PLUS expr:expr2
         {:
-            int line = ((Symbol)PLUS).left;
-            int column = ((Symbol)PLUS).right;
+           // int line = ((Symbol)PLUS).left;
+            //int column = ((Symbol)PLUS).right;
             String occurrence = expr1.toString() + "+" + expr2.toString();
-            StatsMath statsMath = new StatsMath("+", ""+line, ""+column, occurrence);
+            StatsMath statsMath = new StatsMath("+", ""+0, ""+1, occurrence);
             statsMaths.add(statsMath);
-            RESULT = occurrence;
+            RESULT = (expr1.intValue() + expr2.intValue());
         :}
       | expr:expr1 MINUS:MINUS expr:expr2
         {:
-            int line = ((Symbol)MINUS).left;
-            int column = ((Symbol)MINUS).right;
+//            int line = ((Symbol)MINUS).left;
+//            int column = ((Symbol)MINUS).right;
             String occurrence = expr1.toString() + "-" + expr2.toString();
-            StatsMath statsMath = new StatsMath("-", ""+line, ""+column, occurrence);
+            StatsMath statsMath = new StatsMath("-", ""+0, ""+0, "occurrence");
             statsMaths.add(statsMath);
-            RESULT = occurrence;
+            RESULT = (expr1.intValue() - expr2.intValue());
         :}
       | expr:expr1 ASTHERISK:ASTHERISK expr:expr2
         {:
-            int line = ((Symbol)ASTHERISK).left;
-            int column = ((Symbol)ASTHERISK).right;
+//            int line = ((Symbol)ASTHERISK).left;
+//            int column = ((Symbol)ASTHERISK).right;
             String occurrence = expr1.toString() + "*" + expr2.toString();
-            StatsMath statsMath = new StatsMath("*", ""+line, ""+column, occurrence);
+            StatsMath statsMath = new StatsMath("*", ""+1, ""+0, occurrence);
             statsMaths.add(statsMath);
-            RESULT = occurrence;
+            RESULT = (expr1.intValue() * expr2.intValue());
         :}
       | expr:expr1 DIVISION:DIVISION expr:expr2
         {:
-            int line = ((Symbol)DIVISION).left;
-            int column = ((Symbol)DIVISION).right;
+//            int line = ((Symbol)DIVISION).left;
+//            int column = ((Symbol)DIVISION).right;
             String occurrence = expr1.toString() + "/" + expr2.toString();
-            StatsMath statsMath = new StatsMath("/", ""+line, ""+column, occurrence);
+            StatsMath statsMath = new StatsMath("/", ""+1, ""+1, occurrence);
             statsMaths.add(statsMath);
-            RESULT = occurrence;
+            RESULT = (expr1.intValue() / expr2.intValue());
         :}
-      | LPAREN expr:expr RPAREN             {:RESULT = "(" + expr.toString() + ")";:}
-      | NUMBER:number                       {:RESULT = number.toString();:}
-      | REAL:real                           {:RESULT = real.toString();:}
+      | NUMBER:number                       {:RESULT = Integer.parseInt(number);:}
+      | REAL:real {:
+                    double parseDouble = Double.parseDouble(real);
+                    RESULT = (int) parseDouble;
+                   :}
       ;
 
 colors::= BLUE:blue

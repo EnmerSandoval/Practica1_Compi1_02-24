@@ -4,6 +4,7 @@
  */
 package org.practice1.View;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,10 +12,14 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
+//import org.practice1.Cup.Parser;
+//import org.practice1.Lexer.Lexer;
 import org.practice1.Cup.Parser;
 import org.practice1.Lexer.Lexer;
 import org.practice1.Objects.*;
+import org.practice1.Objects.Panels.PanelCircle;
+import org.practice1.Objects.Panels.PanelSquare;
 import org.practice1.Stats.*;
 
 
@@ -203,23 +208,43 @@ public class ViewAnalyzer extends javax.swing.JFrame {
 
     private void buttonCompilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCompilerActionPerformed
         // TODO add your handling code here:
-        try{
-            Lexer lex = new Lexer(new StringReader(textArea.getText()));
-            Parser sintax = new Parser(lex);
-            System.out.println(sintax.parse());
-            figures = sintax.getFigures();
-            statsMaths = sintax.getStatsMath();
-            statsColor = sintax.getStatsColor();
-            statsFigure = sintax.getStatsFigure();
-            
-            if(!figures.isEmpty()){
-                for (int i = 0; i < figures.size(); i++) {
-                    System.out.println(figures.get(i).toString());
-                }
-            }
-        }catch(Exception ex){
-        
-        }
+//        try{
+//            Lexer lex = new Lexer(new StringReader(textArea.getText()));
+//            Parser sintax = new Parser(lex);
+//            System.out.println(sintax.parse());
+//            figures = sintax.getFigures();
+//            statsMaths = sintax.getStatsMath();
+//            statsColor = sintax.getStatsColor();
+//            statsFigure = sintax.getStatsFigure();
+//
+//            for (int i = 0; i < figures.size() ; i++) {
+//                System.out.println(figures.get(i).toString());
+//            }
+//
+//            for (int i = 0; i < statsMaths.size() ; i++) {
+//                System.out.println(statsMaths.get(i).toString());
+//            }
+//
+//            System.out.println(statsColor.toString());
+//
+//            System.out.println(statsFigure.toString());
+//
+//        }catch(Exception ex){
+//            ex.printStackTrace();
+//        }
+
+        Square square = new Square("Cuadrado", 100, 200, 40, "verde");
+        PanelSquare panelSquare = new PanelSquare(square);
+        panelSquare.setBounds(0, 0, square.getLade(), square.getLade());
+
+        Graphics graphics = new Graphics();
+        graphics.marco.setLayout(null);
+        graphics.marco.add(panelSquare);
+        graphics.marco.setPreferredSize(new Dimension(800, 600));
+        graphics.marco.revalidate();
+        graphics.marco.repaint();
+        graphics.setVisible(true);
+
     }//GEN-LAST:event_buttonCompilerActionPerformed
 
     /**

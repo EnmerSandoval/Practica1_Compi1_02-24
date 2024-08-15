@@ -8,15 +8,15 @@ import java.awt.*;
 public class Figure {
 
     private String name;
-    private String x;
-    private String y;
+    private int x;
+    private int y;
     private String color;
     private Animation animation;
 
     public Figure() {
     }
 
-    public Figure(String name, String x, String y, String color) {
+    public Figure(String name, int x, int y, String color) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -36,18 +36,18 @@ public class Figure {
     }
 
     public int getX() {
-        return convertStringToInteger(this.x);
+        return x;
     }
 
-    public void setX(String x) {
+    public void setX(int x) {
         this.x = x;
     }
 
     public int getY() {
-        return convertStringToInteger(this.y);
+        return y;
     }
 
-    public void setY(String y) {
+    public void setY(int y) {
         this.y = y;
     }
 
@@ -81,28 +81,28 @@ public class Figure {
     }
 
     public Color returnColor(String color){
-        switch (color){
-            case "azul":
-                return Color.BLUE;
-            case "rojo":
-                return Color.RED;
-            case "amarillo":
-                return Color.YELLOW;
-            case "verde":
-                return Color.GREEN;
-            case "naranja":
-                return Color.ORANGE;
-            case "gris":
-                return Color.GRAY;
-            case "morado":
-                return Color.CYAN;
-            case "cafe":
-                return Color.PINK;
-            case "negro":
-                return Color.BLACK;
-            default:
-                return Color.BLACK;
-        }
+        return switch (color) {
+            case "azul" -> Color.BLUE;
+            case "rojo" -> Color.RED;
+            case "amarillo" -> Color.YELLOW;
+            case "verde" -> Color.GREEN;
+            case "naranja" -> Color.ORANGE;
+            case "gris" -> Color.GRAY;
+            case "morado" -> Color.CYAN;
+            case "cafe" -> Color.PINK;
+            case "negro" -> Color.BLACK;
+            default -> Color.BLACK;
+        };
+    }
+
+    @Override
+    public String toString() {
+        return "Figure{" +
+                "name='" + name + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", color='" + color + '\'' +
+                ", animation=" + animation +
+                '}';
     }
 }
-

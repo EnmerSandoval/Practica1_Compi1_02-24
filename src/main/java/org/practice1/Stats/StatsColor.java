@@ -86,4 +86,19 @@ public class StatsColor {
     public void setBlack(int black) {
         this.black = black;
     }
+
+    @Override
+    public String toString() {
+        return "StatsColor{" +
+                "blue=" + blue +
+                ", red=" + red +
+                ", yellow=" + yellow +
+                ", green=" + green +
+                ", orange=" + orange +
+                ", gray=" + gray +
+                ", cyan=" + cyan +
+                ", pink=" + pink +
+                ", black=" + black +
+                '}';
+    }
 }

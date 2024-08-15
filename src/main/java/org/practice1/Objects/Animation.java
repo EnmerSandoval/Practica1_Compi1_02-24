@@ -41,4 +41,15 @@ public class Animation {
     public void setOrder(String order) {
         this.order = order;
     }
+
+    @Override
+    public String toString() {
+        return "Animation{" +
+                "type='" + type + '\'' +
+                ", x='" + x + '\'' +
+                ", y='" + y + '\'' +
+                ", order='" + order + '\'' +
+                '}';
+    }
 }
+

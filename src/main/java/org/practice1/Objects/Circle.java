@@ -1,19 +1,19 @@
 package org.practice1.Objects;
 
 public class Circle extends Figure{
-    private String radio;
+    private int radio;
     private final double pi = 3.1416;
 
-    public Circle(String name, String x, String y, String radio,  String color) {
+    public Circle(String name, int x, int y, int radio,  String color) {
         super(name, x, y, color);
         this.radio = radio;
     }
 
     public int getRadio() {
-        return convertStringToInteger(radio);
+        return radio;
     }
 
-    public void setRadio(String radio) {
+    public void setRadio(int radio) {
         this.radio = radio;
     }
 
@@ -27,5 +27,17 @@ public class Circle extends Figure{
 
     public int getDiameter(int radio){
         return getRadio()*getRadio();
+    }
+
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "name='" + getName() +
+                ", x=" + getX() +
+                ", y=" + getY() +
+                ", color='" + getColor() +
+                ", radio=" + radio +
+                ", animation=" + getAnimation().toString() +
+                '}';
     }
 }

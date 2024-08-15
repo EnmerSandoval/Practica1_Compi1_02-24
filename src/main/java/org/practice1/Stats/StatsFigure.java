@@ -69,4 +69,17 @@ public class StatsFigure {
     public void setCurveAnimation(int curveAnimation) {
         this.curveAnimation = curveAnimation;
     }
+
+    @Override
+    public String toString() {
+        return "StatsFigure{" +
+                "circle=" + circle +
+                ", square=" + square +
+                ", rectangle=" + rectangle +
+                ", line=" + line +
+                ", polygon=" + polygon +
+                ", lineAnimation=" + lineAnimation +
+                ", curveAnimation=" + curveAnimation +
+                '}';
+    }
 }

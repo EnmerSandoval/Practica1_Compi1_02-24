@@ -6,20 +6,29 @@ import javax.script.ScriptException;
 
 public class Square extends Figure{
 
-    private String lade;
+    private int lade;
 
-    public Square(String name, String x, String y, String lade, String color) {
+    public Square(String name, int x, int y, int lade, String color) {
         super(name, x, y, color);
         this.lade = lade;
     }
 
     public int getLade() {
-        return convertStringToInteger(lade);
+        return lade;
     }
 
-    public void setLade(String lade) {
+    public void setLade(int lade) {
         this.lade = lade;
     }
 
-
+    @Override
+    public String toString() {
+        return "Square{" +
+                "name=" + getName()+
+                ", x=" + getX()+
+                ", y=" + getY()+
+                ", color= " + getColor()+
+                ", lade=" + lade +
+                '}';
+    }
 }

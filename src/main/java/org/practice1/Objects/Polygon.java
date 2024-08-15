@@ -2,10 +2,10 @@ package org.practice1.Objects;
 
 public class Polygon extends Figure{
 
-    private String numberLades;
-    private String high, wide;
+    private int numberLades;
+    private int high, wide;
 
-    public Polygon(String name, String x, String y, String numberLades, String high, String wide, String color ) {
+    public Polygon(String name, int x, int y, int numberLades, int high, int wide, String color ) {
         super(name, x, y, color);
         this.numberLades = numberLades;
         this.high = high;
@@ -13,26 +13,39 @@ public class Polygon extends Figure{
     }
 
     public int getNumberLades() {
-        return convertStringToInteger(numberLades);
+        return numberLades;
     }
 
-    public void setNumberLades(String numberLades) {
+    public void setNumberLades(int numberLades) {
         this.numberLades = numberLades;
     }
 
     public int getHigh() {
-        return convertStringToInteger(high);
+        return high;
     }
 
-    public void setHigh(String high) {
+    public void setHigh(int high) {
         this.high = high;
     }
 
     public int getWide() {
-        return convertStringToInteger(wide);
+        return wide;
     }
 
-    public void setWide(String wide) {
+    public void setWide(int wide) {
         this.wide = wide;
+    }
+
+    @Override
+    public String toString() {
+        return "Polygon{" +
+                "name='" + getName() +
+                ", x=" + getX() +
+                ", y=" + getY() +
+                ", color='" + getColor() +
+                "numberLades=" + numberLades +
+                ", high=" + high +
+                ", wide=" + wide +
+                '}';
     }
 }

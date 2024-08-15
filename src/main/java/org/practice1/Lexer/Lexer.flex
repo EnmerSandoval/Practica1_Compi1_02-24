@@ -15,13 +15,7 @@ import java.util.ArrayList;
 %column
 %cup
 
-//REGEX
-WHITESPCS       = ([\s\t\r\n]+)
-DIGIT           = [0-9]
-NUMBER          = ([0-9][0-9]*)
-REAL            = ([0-9]+(\.[0-9]+)?([eE][-+]?[0-9]+)?) | (\.[0-9]+([eE][-+]?[0-9]+)?)
-LETTER          = [a-zA-Z]
-NAME            = {WHITESPCS}*({LETTER}|_)+({LETTER}|{DIGIT}|_)*
+
 
 //Instructions
 GRAPH           = "graficar"
@@ -64,6 +58,14 @@ POLYGON         = "poligono"
 
 //signs
 COMMA           = ","
+
+//REGEX
+WHITESPCS       = ([\s\t\r\n]+)
+DIGIT           = [0-9]
+NUMBER          = ([0-9])+
+REAL            = ([0-9]+(\.[0-9]+)?([eE][-+]?[0-9]+)?) | (\.[0-9]+([eE][-+]?[0-9]+)?)
+LETTER          = [a-zA-Z]
+NAME            = ({LETTER}|_)+({LETTER}|{DIGIT}|_)*
 
 %{
         StringBuffer stringBuffer = new StringBuffer();

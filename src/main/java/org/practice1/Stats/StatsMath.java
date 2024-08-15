@@ -44,4 +44,14 @@ public class StatsMath {
     public void setOccurrence(String occurrence) {
         this.occurrence = occurrence;
     }
+
+    @Override
+    public String toString() {
+        return "StatsMath{" +
+                "operator='" + operator + '\'' +
+                ", line='" + line + '\'' +
+                ", column='" + column + '\'' +
+                ", occurrence='" + occurrence + '\'' +
+                '}';
+    }
 }
