@@ -18,7 +18,7 @@ public class PanelCircle extends JPanel {
         super.paintComponent(g);
         Color color = circle.returnColor(circle.getColor());
         g.setColor(color);
-        g.fillArc(circle.getX(), circle.getY(), circle.returnHeight(circle.getRadio()), circle.returnHeight(circle.getRadio()), 0, 360);
+        g.fillOval(circle.getX(), circle.getY(), circle.getRadio()*2, circle.getRadio()*2);
 
         //Texto en medio de la figura
         FontMetrics fm = g.getFontMetrics();

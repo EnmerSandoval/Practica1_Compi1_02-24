@@ -12,14 +12,13 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
-
-//import org.practice1.Cup.Parser;
-//import org.practice1.Lexer.Lexer;
 import org.practice1.Cup.Parser;
 import org.practice1.Lexer.Lexer;
 import org.practice1.Objects.*;
 import org.practice1.Objects.Panels.PanelCircle;
+import org.practice1.Objects.Panels.PanelPolygon;
 import org.practice1.Objects.Panels.PanelSquare;
+import org.practice1.Objects.Polygon;
 import org.practice1.Stats.*;
 
 
@@ -41,6 +40,16 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setTitle("Compilador");
         
+    }
+    
+    public ViewAnalyzer(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure){
+        initComponents();
+        this.setLocationRelativeTo(null);
+        setTitle("Compilador");
+        this.figures = figures;
+        this.statsMaths = statsMaths;
+        this.statsColor = statsColor;
+        this.statsFigure = statsFigure;
     }
 
     @SuppressWarnings("unchecked")
@@ -102,6 +111,11 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         jMenu1.setText("Archivo");
 
         itemNewFile.setText("Nuevo Archivo");
+        itemNewFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNewFileActionPerformed(evt);
+            }
+        });
         jMenu1.add(itemNewFile);
 
         itemSaveFile.setText("Guardar Archivo");
@@ -120,15 +134,35 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         jMenu2.setText("Reportes");
 
         itemOccurrence.setText("Ocurrencia");
+        itemOccurrence.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemOccurrenceActionPerformed(evt);
+            }
+        });
         jMenu2.add(itemOccurrence);
 
         itemColorUsed.setText("Colores Usados");
+        itemColorUsed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemColorUsedActionPerformed(evt);
+            }
+        });
         jMenu2.add(itemColorUsed);
 
         itemObjectsUsted.setText("Objetos Usados");
+        itemObjectsUsted.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemObjectsUstedActionPerformed(evt);
+            }
+        });
         jMenu2.add(itemObjectsUsted);
 
         itemAnimationsUsed.setText("Animaciones Usadas");
+        itemAnimationsUsed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAnimationsUsedActionPerformed(evt);
+            }
+        });
         jMenu2.add(itemAnimationsUsed);
 
         itemErrors.setText("Errores");
@@ -208,44 +242,66 @@ public class ViewAnalyzer extends javax.swing.JFrame {
 
     private void buttonCompilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCompilerActionPerformed
         // TODO add your handling code here:
-//        try{
-//            Lexer lex = new Lexer(new StringReader(textArea.getText()));
-//            Parser sintax = new Parser(lex);
-//            System.out.println(sintax.parse());
-//            figures = sintax.getFigures();
-//            statsMaths = sintax.getStatsMath();
-//            statsColor = sintax.getStatsColor();
-//            statsFigure = sintax.getStatsFigure();
-//
-//            for (int i = 0; i < figures.size() ; i++) {
-//                System.out.println(figures.get(i).toString());
-//            }
-//
-//            for (int i = 0; i < statsMaths.size() ; i++) {
-//                System.out.println(statsMaths.get(i).toString());
-//            }
-//
-//            System.out.println(statsColor.toString());
-//
-//            System.out.println(statsFigure.toString());
-//
-//        }catch(Exception ex){
-//            ex.printStackTrace();
-//        }
+        try{
+            Lexer lex = new Lexer(new StringReader(textArea.getText()));
+            Parser sintax = new Parser(lex);
+            System.out.println(sintax.parse());
+            figures = sintax.getFigures();
+            statsMaths = sintax.getStatsMath();
+            statsColor = sintax.getStatsColor();
+            statsFigure = sintax.getStatsFigure();
 
-        Square square = new Square("Cuadrado", 100, 200, 40, "verde");
-        PanelSquare panelSquare = new PanelSquare(square);
-        panelSquare.setBounds(0, 0, square.getLade(), square.getLade());
+            for (int i = 0; i < figures.size() ; i++) {
+                System.out.println(figures.get(i).toString());
+            }
 
-        Graphics graphics = new Graphics();
-        graphics.marco.setLayout(null);
-        graphics.marco.add(panelSquare);
-        graphics.marco.setPreferredSize(new Dimension(800, 600));
-        graphics.marco.revalidate();
-        graphics.marco.repaint();
-        graphics.setVisible(true);
+            for (int i = 0; i < statsMaths.size() ; i++) {
+                System.out.println(statsMaths.get(i).toString());
+            }
 
+            System.out.println(statsColor.toString());
+
+            System.out.println(statsFigure.toString());
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+
+        
     }//GEN-LAST:event_buttonCompilerActionPerformed
+
+    private void itemColorUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemColorUsedActionPerformed
+        // TODO add your handling code here:
+        ColorsUsedReport colorsUsedReport = new ColorsUsedReport(figures, statsMaths, statsColor, statsFigure);
+        colorsUsedReport.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemColorUsedActionPerformed
+
+    private void itemNewFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNewFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemNewFileActionPerformed
+
+    private void itemAnimationsUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAnimationsUsedActionPerformed
+        // TODO add your handling code here:
+        AnimationUsedReport animationUsedReport = new AnimationUsedReport(figures, statsMaths, statsColor, statsFigure);
+        animationUsedReport.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemAnimationsUsedActionPerformed
+
+    private void itemObjectsUstedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemObjectsUstedActionPerformed
+        // TODO add your handling code here:
+        ObjectsUsedReports objectsUsedReports = new ObjectsUsedReports(figures, statsMaths, statsColor, statsFigure);
+        objectsUsedReports.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemObjectsUstedActionPerformed
+
+    private void itemOccurrenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOccurrenceActionPerformed
+        // TODO add your handling code here:
+        OcurrenceReport ocurrenceReport = new OcurrenceReport(figures, statsMaths, statsColor, statsFigure);
+        ocurrenceReport.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemOccurrenceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,4 +365,5 @@ public class ViewAnalyzer extends javax.swing.JFrame {
     private void JOptionPane(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 }

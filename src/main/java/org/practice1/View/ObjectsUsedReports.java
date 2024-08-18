@@ -4,19 +4,55 @@
  */
 package org.practice1.View;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import org.practice1.Objects.Figure;
+import org.practice1.Stats.StatsColor;
+import org.practice1.Stats.StatsFigure;
+import org.practice1.Stats.StatsMath;
+
 /**
  *
  * @author laptop
  */
 public class ObjectsUsedReports extends javax.swing.JFrame {
-
+    private ArrayList<Figure> figures = new ArrayList<>();
+    private ArrayList<StatsMath> statsMaths = new ArrayList<>();
+    private StatsColor statsColor = new StatsColor();
+    private StatsFigure statsFigure = new StatsFigure();
+    
     /**
      * Creates new form ObjectsUsedReports
      */
-    public ObjectsUsedReports() {
+    public ObjectsUsedReports(ArrayList<Figure> figures, ArrayList<StatsMath> statsMath, StatsColor statsColor, StatsFigure statsFigure) {
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Reporte de Objetos Usados");
+        this.figures = figures;
+        this.statsMaths = statsMaths;
+        this.statsColor = statsColor;
+        this.statsFigure = statsFigure;
+        tableObjects();
     }
 
+    public ObjectsUsedReports() {
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Reporte de Objetos Usados");
+    }
+    
+
+    private void tableObjects(){
+        DefaultTableModel defaultTableModel = (DefaultTableModel) (table.getModel());
+        defaultTableModel.setNumRows(0);
+        
+        defaultTableModel.addRow(new Object[]{"Circulo", statsFigure.getCircle()});
+        defaultTableModel.addRow(new Object[]{"Cuadrado", statsFigure.getSquare()});
+        defaultTableModel.addRow(new Object[]{"Rectangulo", statsFigure.getRectangle()});
+        defaultTableModel.addRow(new Object[]{"Linea", statsFigure.getLine()});
+        defaultTableModel.addRow(new Object[]{"Poligono", statsFigure.getPolygon()});
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,7 +64,7 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
 
         labelTextArea = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -40,7 +76,7 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
         labelTextArea.setFont(new java.awt.Font("Rockwell Extra Bold", 1, 24)); // NOI18N
         labelTextArea.setText("Reporte de Objetos Usados");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -59,9 +95,14 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
         jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Exportar");
 
@@ -107,6 +148,13 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure);
+        viewAnalyzer.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -149,7 +197,7 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTextArea;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

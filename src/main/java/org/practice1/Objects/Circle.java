@@ -37,7 +37,6 @@ public class Circle extends Figure{
                 ", y=" + getY() +
                 ", color='" + getColor() +
                 ", radio=" + radio +
-                ", animation=" + getAnimation().toString() +
                 '}';
     }
 }

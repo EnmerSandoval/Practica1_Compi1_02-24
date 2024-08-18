@@ -80,6 +80,7 @@ non terminal in;
 
 precedence left PLUS, MINUS;
 precedence left ASTHERISK, DIVISION;
+precedence left LPAREN, RPAREN;
 
 start with in;
 
@@ -141,13 +142,15 @@ figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y
 
 animation::= OBJECTO PREVIOUS LPAREN animations:animations COMMA expresion_list:x COMMA expresion_list:y
              COMMA expresion_list:order RPAREN
-             {:Animation animationResult = new Animation(animations.toString(), x.toString(), y.toString(), order.toString());
+             {:Animation animationResult = new Animation(animations.toString(), x, y, order);
                 if(previousFigure != null){
+                    System.out.println(previousFigure.toString());
                     previousFigure.setAnimation(animationResult);
                     previousFigure = null;
                 } else {
                     System.out.println("No existe un objeto anterior");
                 }
+
                RESULT = animationResult;
              :}
              ;
@@ -182,7 +185,7 @@ expr::= LPAREN expr:expr RPAREN            {: RESULT = expr; :}
 //            int line = ((Symbol)MINUS).left;
 //            int column = ((Symbol)MINUS).right;
             String occurrence = expr1.toString() + "-" + expr2.toString();
-            StatsMath statsMath = new StatsMath("-", ""+0, ""+0, "occurrence");
+            StatsMath statsMath = new StatsMath("-", ""+0, ""+0, occurrence);
             statsMaths.add(statsMath);
             RESULT = (expr1.intValue() - expr2.intValue());
         :}

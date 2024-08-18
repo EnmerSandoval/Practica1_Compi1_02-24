@@ -18,6 +18,8 @@ public class PanelSquare extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Color color = square.returnColor(square.getColor());
+        g.setColor(color);
+
         
         g.fillRect(square.getX(), square.getY(), square.getLade(),square.getLade());
         
@@ -27,7 +29,7 @@ public class PanelSquare extends JPanel {
 
         int x = square.getX() + (width / 2);
         int y = square.getY() + (height / 2);
-        g.setColor(color);
+        g.setColor(Color.black);
         g.drawString(square.getName(), x, y);
     }
 }

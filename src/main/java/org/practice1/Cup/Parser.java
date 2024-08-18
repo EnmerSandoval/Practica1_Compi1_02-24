@@ -499,13 +499,15 @@ class CUP$Parser$actions {
 		int orderleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int orderright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		Integer order = (Integer)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		Animation animationResult = new Animation(animations.toString(), x.toString(), y.toString(), order.toString());
+		Animation animationResult = new Animation(animations.toString(), x, y, order);
                 if(previousFigure != null){
+                    System.out.println(previousFigure.toString());
                     previousFigure.setAnimation(animationResult);
                     previousFigure = null;
                 } else {
                     System.out.println("No existe un objeto anterior");
                 }
+
                RESULT = animationResult;
              
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("animation",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -608,7 +610,7 @@ class CUP$Parser$actions {
 //            int line = ((Symbol)MINUS).left;
 //            int column = ((Symbol)MINUS).right;
             String occurrence = expr1.toString() + "-" + expr2.toString();
-            StatsMath statsMath = new StatsMath("-", ""+0, ""+0, "occurrence");
+            StatsMath statsMath = new StatsMath("-", ""+0, ""+0, occurrence);
             statsMaths.add(statsMath);
             RESULT = (expr1.intValue() - expr2.intValue());
         

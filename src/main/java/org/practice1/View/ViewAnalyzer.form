@@ -18,6 +18,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo Archivo"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemNewFileActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemSaveFile">
               <Properties>
@@ -43,21 +46,33 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ocurrencia"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemOccurrenceActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemColorUsed">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Colores Usados"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemColorUsedActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemObjectsUsted">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Objetos Usados"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemObjectsUstedActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemAnimationsUsed">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Animaciones Usadas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemAnimationsUsedActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemErrors">
               <Properties>

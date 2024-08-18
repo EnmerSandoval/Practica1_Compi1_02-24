@@ -1,9 +1,10 @@
 package org.practice1.Objects;
 
 public class Animation {
-    private String type, x, y, order;
+    private String type;
+    private int x, y, order;
 
-    public Animation(String type, String x, String y, String order) {
+    public Animation(String type, int x, int y, int order) {
         this.type = type;
         this.x = x;
         this.y = y;
@@ -18,30 +19,31 @@ public class Animation {
         this.type = type;
     }
 
-    public String getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(String x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public String getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(String y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public String getOrder() {
+    public int getOrder() {
         return order;
     }
 
-    public void setOrder(String order) {
+    public void setOrder(int order) {
         this.order = order;
     }
 
+    
     @Override
     public String toString() {
         return "Animation{" +

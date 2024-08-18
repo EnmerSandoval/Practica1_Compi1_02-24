@@ -4,18 +4,57 @@
  */
 package org.practice1.View;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import org.practice1.Objects.Figure;
+import org.practice1.Stats.StatsColor;
+import org.practice1.Stats.StatsFigure;
+import org.practice1.Stats.StatsMath;
+import utils.Util;
+
 /**
  *
  * @author laptop
  */
 public class OcurrenceReport extends javax.swing.JFrame {
-
+    private ArrayList<Figure> figures = new ArrayList<>();
+    private ArrayList<StatsMath> statsMaths = new ArrayList<>();
+    private StatsColor statsColor = new StatsColor();
+    private StatsFigure statsFigure = new StatsFigure();
     /**
      * Creates new form OcurrenceReport
      */
+    public OcurrenceReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure) {
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Reporte de Ocurrencia");
+        this.figures = figures;
+        this.statsMaths = statsMaths;
+        this.statsColor = statsColor;
+        this.statsFigure = statsFigure;
+        dataToTable();
+    }
+
     public OcurrenceReport() {
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Reporte de Ocurrencia");
     }
+    
+    
+    
+    private void dataToTable(){
+        DefaultTableModel defaultTableModel = (DefaultTableModel)(table.getModel());
+        defaultTableModel.setNumRows(0);
+        if(statsMaths.size() > 0){
+            for (int i = 0; i < statsMaths.size(); i++) {
+                defaultTableModel.addRow(new Object[]{statsMaths.get(i).getOperator(), statsMaths.get(i).getLine(),
+                    statsMaths.get(i).getColumn(), statsMaths.get(i).getOccurrence()});
+            }
+        }
+
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,19 +67,19 @@ public class OcurrenceReport extends javax.swing.JFrame {
 
         labelTextArea = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        table = new javax.swing.JTable();
+        buttonAccept = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        itemExportToPNG = new javax.swing.JMenuItem();
+        itemExportToPDF = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         labelTextArea.setFont(new java.awt.Font("Rockwell Extra Bold", 1, 18)); // NOI18N
         labelTextArea.setText("Reporte de Ocurrencia de operadores Matematicos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,22 +98,32 @@ public class OcurrenceReport extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonAccept.setText("Aceptar");
+        buttonAccept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonAcceptActionPerformed(evt);
             }
         });
 
         jMenu1.setText("Exportar");
 
-        jMenuItem1.setText("Exportar a PNG");
-        jMenu1.add(jMenuItem1);
+        itemExportToPNG.setText("Exportar a PNG");
+        itemExportToPNG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemExportToPNGActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itemExportToPNG);
 
-        jMenuItem2.setText("Exportar a PDF");
-        jMenu1.add(jMenuItem2);
+        itemExportToPDF.setText("Exportar a PDF");
+        itemExportToPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemExportToPDFActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itemExportToPDF);
 
         jMenuBar1.add(jMenu1);
 
@@ -91,7 +140,7 @@ public class OcurrenceReport extends javax.swing.JFrame {
                         .addComponent(labelTextArea))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(333, 333, 333)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(buttonAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -105,16 +154,29 @@ public class OcurrenceReport extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addComponent(buttonAccept, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buttonAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAcceptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure);
+        viewAnalyzer.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonAcceptActionPerformed
+
+    private void itemExportToPNGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemExportToPNGActionPerformed
+        // TODO add your handling code here:
+        Util.exportTableToPNG(table);
+    }//GEN-LAST:event_itemExportToPNGActionPerformed
+
+    private void itemExportToPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemExportToPDFActionPerformed
+        // TODO add your handling code here:
+        Util.exportTableToPDF(table, "Reporte de Ocurrencia");
+    }//GEN-LAST:event_itemExportToPDFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,13 +214,13 @@ public class OcurrenceReport extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton buttonAccept;
+    private javax.swing.JMenuItem itemExportToPDF;
+    private javax.swing.JMenuItem itemExportToPNG;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTextArea;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
