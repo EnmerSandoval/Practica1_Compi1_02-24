@@ -17,6 +17,7 @@ import utils.Util;
  * @author laptop
  */
 public class ColorsUsedReport extends javax.swing.JFrame {
+    private String filePath = "";
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
@@ -26,7 +27,7 @@ public class ColorsUsedReport extends javax.swing.JFrame {
     /**
      * Creates new form ColorsUsedReport
      */
-    public ColorsUsedReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure) {
+    public ColorsUsedReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath) {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Reporte Colores Utilizados");
@@ -34,6 +35,7 @@ public class ColorsUsedReport extends javax.swing.JFrame {
         this.statsMaths = statsMaths;
         this.statsColor = statsColor;
         this.statsFigure = statsFigure;
+        this.filePath = filePath;
         table();
     }
 
@@ -42,8 +44,6 @@ public class ColorsUsedReport extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Reporte Colores Utilizados");
     }
-    
-    
     
     public void table(){
         DefaultTableModel defaultTableModel = (DefaultTableModel) jTable1.getModel();
@@ -164,7 +164,7 @@ public class ColorsUsedReport extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure);
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath);
         viewAnalyzer.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

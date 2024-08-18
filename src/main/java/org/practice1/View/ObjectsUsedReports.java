@@ -16,6 +16,7 @@ import org.practice1.Stats.StatsMath;
  * @author laptop
  */
 public class ObjectsUsedReports extends javax.swing.JFrame {
+    private String filePath = "";
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
@@ -24,7 +25,7 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
     /**
      * Creates new form ObjectsUsedReports
      */
-    public ObjectsUsedReports(ArrayList<Figure> figures, ArrayList<StatsMath> statsMath, StatsColor statsColor, StatsFigure statsFigure) {
+    public ObjectsUsedReports(ArrayList<Figure> figures, ArrayList<StatsMath> statsMath, StatsColor statsColor, StatsFigure statsFigure, String filePath) {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Reporte de Objetos Usados");
@@ -32,6 +33,7 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
         this.statsMaths = statsMaths;
         this.statsColor = statsColor;
         this.statsFigure = statsFigure;
+        this.filePath = filePath;
         tableObjects();
     }
 
@@ -150,7 +152,7 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure);
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath);
         viewAnalyzer.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JMenuItem" name="jMenuItem4">
       <Properties>
@@ -127,9 +127,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="labelTextArea" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="71" max="-2" attributes="0"/>
+                      <Component id="txtLine" min="-2" pref="71" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtColumn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -142,8 +142,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelTextArea" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtLine" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtColumn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="276" max="32767" attributes="0"/>
@@ -180,6 +180,9 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="textArea.addCaretListener(new CaretListener() {&#xa;            @Override&#xa;            public void caretUpdate(CaretEvent e) {&#xa;                textArea.setEditable(true);&#xa;                JTextArea source = (JTextArea) e.getSource();&#xa;                int caretPosition = source.getCaretPosition();&#xa;                Element root = source.getDocument().getDefaultRootElement();&#xa;                int conteoFila = root.getElementIndex(caretPosition) + 1;&#xa;                int conteoColumna = caretPosition - root.getElement(conteoFila - 1).getStartOffset() + 1;&#xa;                txtLine.setText(&quot;Line: &quot; + (conteoFila - 1));&#xa;                txtColumn.setText(&quot;Column: &quot; + (conteoColumna - 1));&#xa;            }&#xa;        });"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -206,7 +209,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextArea2">
+        <Component class="javax.swing.JTextArea" name="txtConsole">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
@@ -215,12 +218,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="txtLine">
       <Properties>
         <Property name="text" type="java.lang.String" value="Linea:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="txtColumn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Columna:"/>
       </Properties>

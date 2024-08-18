@@ -19,7 +19,7 @@ import javax.swing.JTable;
  *
  * @author laptop
  */
-public class Util {
+public class    Util {
  
     //Export to PNG
     public static void exportTableToPNG(JTable table){

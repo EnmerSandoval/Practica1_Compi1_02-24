@@ -17,6 +17,7 @@ import utils.Util;
  * @author laptop
  */
 public class OcurrenceReport extends javax.swing.JFrame {
+    private String filePath = "";
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
@@ -24,7 +25,7 @@ public class OcurrenceReport extends javax.swing.JFrame {
     /**
      * Creates new form OcurrenceReport
      */
-    public OcurrenceReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure) {
+    public OcurrenceReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath) {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Reporte de Ocurrencia");
@@ -32,6 +33,7 @@ public class OcurrenceReport extends javax.swing.JFrame {
         this.statsMaths = statsMaths;
         this.statsColor = statsColor;
         this.statsFigure = statsFigure;
+        this.filePath = filePath;
         dataToTable();
     }
 
@@ -40,19 +42,14 @@ public class OcurrenceReport extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Reporte de Ocurrencia");
     }
-    
-    
-    
+
     private void dataToTable(){
         DefaultTableModel defaultTableModel = (DefaultTableModel)(table.getModel());
         defaultTableModel.setNumRows(0);
-        if(statsMaths.size() > 0){
             for (int i = 0; i < statsMaths.size(); i++) {
                 defaultTableModel.addRow(new Object[]{statsMaths.get(i).getOperator(), statsMaths.get(i).getLine(),
-                    statsMaths.get(i).getColumn(), statsMaths.get(i).getOccurrence()});
+                        statsMaths.get(i).getColumn(), statsMaths.get(i).getOccurrence()});
             }
-        }
-
     }
     
 
@@ -163,7 +160,7 @@ public class OcurrenceReport extends javax.swing.JFrame {
 
     private void buttonAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAcceptActionPerformed
         // TODO add your handling code here:
-        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure);
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath);
         viewAnalyzer.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonAcceptActionPerformed

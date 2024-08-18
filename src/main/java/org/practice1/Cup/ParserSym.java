@@ -8,38 +8,37 @@ package org.practice1.Cup;
 /** CUP generated class containing symbol constants. */
 public class ParserSym {
   /* terminals */
-  public static final int GREEN = 17;
-  public static final int SQUARE = 24;
+  public static final int GREEN = 16;
+  public static final int SQUARE = 23;
   public static final int PLUS = 2;
   public static final int RPAREN = 7;
-  public static final int CURVE = 27;
-  public static final int GRAY = 19;
-  public static final int BLACK = 22;
+  public static final int CURVE = 26;
+  public static final int GRAY = 18;
+  public static final int BLACK = 21;
   public static final int DIVISION = 5;
-  public static final int PINK = 21;
-  public static final int CIRCLE = 23;
+  public static final int PINK = 20;
+  public static final int CIRCLE = 22;
   public static final int ASTHERISK = 4;
-  public static final int NAME = 31;
-  public static final int BLUE = 14;
+  public static final int NAME = 30;
+  public static final int BLUE = 13;
   public static final int LPAREN = 6;
-  public static final int RED = 15;
-  public static final int EQUALS = 9;
-  public static final int POLYGON = 26;
+  public static final int RED = 14;
+  public static final int POLYGON = 25;
   public static final int COMMA = 8;
-  public static final int NUMBER = 29;
+  public static final int NUMBER = 28;
   public static final int EOF = 0;
-  public static final int ORANGE = 18;
-  public static final int RECTANGLE = 25;
-  public static final int CYAN = 20;
-  public static final int GRAPH = 10;
+  public static final int ORANGE = 17;
+  public static final int RECTANGLE = 24;
+  public static final int CYAN = 19;
+  public static final int GRAPH = 9;
   public static final int MINUS = 3;
   public static final int error = 1;
-  public static final int OBJECTO = 12;
-  public static final int PREVIOUS = 13;
-  public static final int LINE = 28;
-  public static final int YELLOW = 16;
-  public static final int ANIMATE = 11;
-  public static final int REAL = 30;
+  public static final int OBJECTO = 11;
+  public static final int PREVIOUS = 12;
+  public static final int LINE = 27;
+  public static final int YELLOW = 15;
+  public static final int ANIMATE = 10;
+  public static final int REAL = 29;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -50,7 +49,6 @@ public class ParserSym {
   "LPAREN",
   "RPAREN",
   "COMMA",
-  "EQUALS",
   "GRAPH",
   "ANIMATE",
   "OBJECTO",

@@ -8,7 +8,7 @@ import org.practice1.Stats.*;
 class Parser;
 
 parser code{:
-
+    private ArrayList<ErrorL> errors = new ArrayList<ErrorL>();
     private ArrayList<Figure> figures = new ArrayList<Figure>();
     private ArrayList<StatsMath> statsMaths = new ArrayList<StatsMath>();
     private StatsColor statsColor = new StatsColor();
@@ -31,21 +31,26 @@ parser code{:
         return this.statsFigure;
     }
 
-        public void syntax_error(Symbol s){
-            System.out.println("Error Sintáctico en la Línea " + (s.right) +
-            " Columna "+s.left+ ". No se esperaba este componente: " +s.value+".");
-        }
+    public ArrayList<ErrorL> getErrors(){
+        return this.errors;
+    }
+
+    public void syntax_error(Symbol s){
+        System.out.println("Error Sintáctico en la Línea " + (s.right) +
+        " Columna "+s.left+ ". No se esperaba este componente: " +s.value+".");
+    }
 
 
-        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-            System.out.println("Error síntactico irrecuperable en la Línea " +
-            (s.left)+ " Columna "+s.right+". Componente " + s.value +
-            " no reconocido.");
-        }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.out.println("Error síntactico irrecuperable en la Línea " +
+        (s.left)+ " Columna "+s.right+". Componente " + s.value +
+        " no reconocido.");
+    }
+
 
 :}
 //Terminal Symbols as signs
-terminal PLUS, MINUS, ASTHERISK, DIVISION, LPAREN, RPAREN, COMMA, EQUALS;
+terminal PLUS, MINUS, ASTHERISK, DIVISION, LPAREN, RPAREN, COMMA;
 
 //Instructions
 terminal GRAPH, ANIMATE, OBJECTO, PREVIOUS;
@@ -86,6 +91,7 @@ start with in;
 
 in::= GRAPH figures in
     | ANIMATE animation in
+    | error in
     | //vacio
     ;
 

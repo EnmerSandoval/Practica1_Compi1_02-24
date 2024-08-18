@@ -30,7 +30,6 @@ ASTHERISK       = "*"
 DIVISION        = "/"
 LPAREN          = "("
 RPAREN          = ")"
-EQUALS          = "="
 
 //Colors
 BLUE            = "azul"
@@ -104,7 +103,6 @@ NAME            = ({LETTER}|_)+({LETTER}|{DIGIT}|_)*
 {DIVISION}               {return new Symbol(ParserSym.DIVISION, yycolumn, yyline, yytext());}
 {LPAREN}                 {return new Symbol(ParserSym.LPAREN, yycolumn, yyline, yytext());}
 {RPAREN}                 {return new Symbol(ParserSym.RPAREN, yycolumn, yyline, yytext());}
-{EQUALS}                 {return new Symbol(ParserSym.EQUALS, yycolumn, yyline, yytext());}
 
 //Colors
 {BLUE}                   {return new Symbol(ParserSym.BLUE, yytext());}
