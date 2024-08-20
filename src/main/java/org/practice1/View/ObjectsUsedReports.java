@@ -6,6 +6,7 @@ package org.practice1.View;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import org.practice1.Errors.ErrorL;
 import org.practice1.Objects.Figure;
 import org.practice1.Stats.StatsColor;
 import org.practice1.Stats.StatsFigure;
@@ -21,11 +22,13 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
-    
+    private ArrayList<ErrorL> errors = new ArrayList<>();
+    private ArrayList<String> messages = new ArrayList<>();
+    private String text = "";
     /**
      * Creates new form ObjectsUsedReports
      */
-    public ObjectsUsedReports(ArrayList<Figure> figures, ArrayList<StatsMath> statsMath, StatsColor statsColor, StatsFigure statsFigure, String filePath) {
+    public ObjectsUsedReports(ArrayList<Figure> figures, ArrayList<StatsMath> statsMath, StatsColor statsColor, StatsFigure statsFigure, String filePath, String text, ArrayList<ErrorL> errors, ArrayList<String> messages) {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Reporte de Objetos Usados");
@@ -33,6 +36,9 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
         this.statsMaths = statsMaths;
         this.statsColor = statsColor;
         this.statsFigure = statsFigure;
+        this.text = text;
+        this.errors = errors;
+        this.messages = messages;
         this.filePath = filePath;
         tableObjects();
     }
@@ -152,7 +158,7 @@ public class ObjectsUsedReports extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath);
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
         viewAnalyzer.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

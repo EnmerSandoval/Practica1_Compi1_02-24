@@ -1,19 +1,17 @@
 package org.practice1.Objects;
 
-import org.practice1.Objects.Panels.PanelPolygon;
+import java.awt.Graphics2D;
 
 public class Polygon extends Figure{
 
     private int numberLades;
     private int high, wide;
-    private PanelPolygon panelPolygon;
 
     public Polygon(String name, int x, int y, int numberLades, int high, int wide, String color ) {
         super(name, x, y, color);
         this.numberLades = numberLades;
         this.high = high;
         this.wide = wide;
-        this.panelPolygon = new PanelPolygon(this);
     }
 
     public int getNumberLades() {
@@ -40,13 +38,6 @@ public class Polygon extends Figure{
         this.wide = wide;
     }
 
-    public PanelPolygon getPanelPolygon() {
-        return panelPolygon;
-    }
-
-    public void setPanelPolygon(PanelPolygon panelPolygon) {
-        this.panelPolygon = panelPolygon;
-    }
 
     @Override
     public String toString() {
@@ -59,5 +50,21 @@ public class Polygon extends Figure{
                 ", high=" + high +
                 ", wide=" + wide +
                 '}';
+    }
+
+    @Override
+    public void draw(Graphics2D g2d) {
+     g2d.setColor(returnColor(getColor()));
+        int[] xPoints = new int[getNumberLades()];
+        int[] yPoints = new int[getNumberLades()];
+
+        double angle = 2 * Math.PI / numberLades;
+        for (int i = 0; i < numberLades; i++) {
+            xPoints[i] = (int) (getX() + wide * Math.cos(i * angle));
+            yPoints[i] = (int) (getY() + high * Math.sin(i * angle));
+        }
+
+        java.awt.Polygon polygon = new java.awt.Polygon(xPoints, yPoints, numberLades);
+        g2d.fillPolygon(polygon);    
     }
 }

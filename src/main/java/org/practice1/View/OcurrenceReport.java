@@ -6,6 +6,7 @@ package org.practice1.View;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import org.practice1.Errors.ErrorL;
 import org.practice1.Objects.Figure;
 import org.practice1.Stats.StatsColor;
 import org.practice1.Stats.StatsFigure;
@@ -22,10 +23,13 @@ public class OcurrenceReport extends javax.swing.JFrame {
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
+    private String text = "";
+    private ArrayList<ErrorL> errors = new ArrayList<>();
+    private ArrayList<String> messages = new ArrayList<>();
     /**
      * Creates new form OcurrenceReport
      */
-    public OcurrenceReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath) {
+    public OcurrenceReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath, String text, ArrayList<ErrorL> errors, ArrayList<String> messages) {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Reporte de Ocurrencia");
@@ -34,6 +38,9 @@ public class OcurrenceReport extends javax.swing.JFrame {
         this.statsColor = statsColor;
         this.statsFigure = statsFigure;
         this.filePath = filePath;
+        this.text = text;
+        this.errors = errors;
+        this.messages = messages;
         dataToTable();
     }
 
@@ -160,7 +167,7 @@ public class OcurrenceReport extends javax.swing.JFrame {
 
     private void buttonAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAcceptActionPerformed
         // TODO add your handling code here:
-        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath);
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
         viewAnalyzer.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonAcceptActionPerformed

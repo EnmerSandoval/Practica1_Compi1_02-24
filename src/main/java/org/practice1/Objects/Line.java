@@ -1,17 +1,15 @@
 package org.practice1.Objects;
 
-import org.practice1.Objects.Panels.PanelLine;
+import java.awt.Graphics2D;
 
 public class Line extends Figure{
 
     private int x2, y2;
-    private PanelLine panelLine;
 
     public Line(String name, int x, int y, int x2, int y2, String color){
         super(name, x, y, color);
         this.x2 = x2;
         this.y2 = y2;
-        this.panelLine = new PanelLine(this);
     }
 
     public int getX2() {
@@ -38,13 +36,6 @@ public class Line extends Figure{
         return x2 + y2;
     }
 
-    public PanelLine getPanelLine() {
-        return panelLine;
-    }
-
-    public void setPanelLine(PanelLine panelLine) {
-        this.panelLine = panelLine;
-    }
 
     @Override
     public String toString() {
@@ -56,5 +47,11 @@ public class Line extends Figure{
                 "x2=" + x2 +
                 ", y2=" + y2 +
                 '}';
+    }
+
+    @Override
+    public void draw(Graphics2D g2d) {
+        g2d.setColor(returnColor(getColor()));
+        g2d.drawLine(getX(), getY(), getX2(), getY2());
     }
 }

@@ -5,7 +5,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.awt.*;
 
-public class Figure {
+public abstract class Figure {
 
     private String name;
     private int x;
@@ -67,18 +67,6 @@ public class Figure {
         this.animation = animation;
     }
 
-    public int convertStringToInteger(String str){
-        ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-        ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
-
-        try {
-            Object result = scriptEngine.eval(str);
-            return ((Double) result).intValue();
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
 
     public Color returnColor(String color){
         return switch (color) {
@@ -94,6 +82,9 @@ public class Figure {
             default -> Color.BLACK;
         };
     }
+    
+    public abstract void draw(Graphics2D g2d);
+
 
     @Override
     public String toString() {

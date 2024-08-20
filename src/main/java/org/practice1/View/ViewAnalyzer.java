@@ -10,16 +10,12 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.text.Element;
 
 import org.practice1.Cup.Parser;
+import org.practice1.Errors.ErrorL;
 import org.practice1.Lexer.Lexer;
 import org.practice1.Objects.*;
-import org.practice1.Objects.Panels.PanelCircle;
-import org.practice1.Objects.Panels.PanelPolygon;
-import org.practice1.Objects.Panels.PanelSquare;
-import org.practice1.Objects.Polygon;
 import org.practice1.Stats.*;
 
 
@@ -32,6 +28,8 @@ public class ViewAnalyzer extends javax.swing.JFrame {
     private String text = "";
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
+    private ArrayList<ErrorL> errors = new ArrayList<>();
+    private ArrayList<String> messages = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
     
@@ -42,10 +40,10 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setTitle("Compilador");
-        
+        verifiedButtons();
     }
     
-    public ViewAnalyzer(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath){
+    public ViewAnalyzer(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath, String text, ArrayList<ErrorL> errors, ArrayList<String> messages){
         initComponents();
         this.setLocationRelativeTo(null);
         setTitle("Compilador");
@@ -54,6 +52,47 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         this.statsColor = statsColor;
         this.statsFigure = statsFigure;
         this.filePath = filePath;
+        this.text = text;
+        this.errors = errors;
+        this.messages = messages;
+        setTextToFrom(text, messages);
+        verifiedButtons();
+    }
+    
+    private void verifiedButtons(){
+        if(figures.size() == 0){
+            itemGrafics.setEnabled(false);
+        }else {
+            itemGrafics.setEnabled(true);
+        }
+    }
+    
+    private void setTextToFrom(String text, ArrayList<String> messages){
+        textArea.setText(text);
+        setTextConsole(messages);
+    }
+    
+    private void setTextConsole(ArrayList<String> messages){
+        if(messages != null){
+            String console = "";
+            for (int i = 0; i < messages.size(); i++) {
+                console += messages.get(i) + "\n";
+            }
+            txtConsole.setText(console);
+        }
+    }
+    
+    private void cleanAll(){
+        figures = new ArrayList<>();
+        statsMaths = new ArrayList<>();
+        statsColor = new StatsColor();
+        errors = new ArrayList<>();
+        messages = new ArrayList<>();
+        filePath = "";
+        statsFigure = new StatsFigure();
+        text = "";
+        textArea.setText("");
+        txtConsole.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -81,6 +120,11 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         itemObjectsUsted = new javax.swing.JMenuItem();
         itemAnimationsUsed = new javax.swing.JMenuItem();
         itemErrors = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        itemCleanConsole = new javax.swing.JMenuItem();
+        itemCleanIDE = new javax.swing.JMenuItem();
+        itemCleanAll = new javax.swing.JMenuItem();
+        itemGrafics = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
@@ -136,6 +180,11 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         jMenu1.add(itemNewFile);
 
         itemSaveFile.setText("Guardar Archivo");
+        itemSaveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemSaveFileActionPerformed(evt);
+            }
+        });
         jMenu1.add(itemSaveFile);
 
         itemUploadFile.setText("Cargar Archivo de texto");
@@ -183,9 +232,50 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         jMenu2.add(itemAnimationsUsed);
 
         itemErrors.setText("Errores");
+        itemErrors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemErrorsActionPerformed(evt);
+            }
+        });
         jMenu2.add(itemErrors);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Funciones");
+
+        itemCleanConsole.setText("Limpiar Consola");
+        itemCleanConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCleanConsoleActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemCleanConsole);
+
+        itemCleanIDE.setText("Limpiar IDE");
+        itemCleanIDE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCleanIDEActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemCleanIDE);
+
+        itemCleanAll.setText("Limpiar Valores");
+        itemCleanAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCleanAllActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemCleanAll);
+
+        itemGrafics.setText("Graficar");
+        itemGrafics.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGraficsActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemGrafics);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -226,9 +316,9 @@ public class ViewAnalyzer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonCompiler, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelConsole))
+                    .addComponent(labelConsole, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -243,6 +333,7 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         int selection = fileChooser.showOpenDialog(this);
         
         if(selection == JFileChooser.APPROVE_OPTION){
+            cleanAll();
             File file = fileChooser.getSelectedFile();
             filePath = file.getAbsolutePath();
             BufferedReader buff = null;
@@ -253,7 +344,7 @@ public class ViewAnalyzer extends javax.swing.JFrame {
                     textArea.append("\n"+str);
                 }
             } catch (IOException io) {
-                JOptionPane("Hubo un error al abrir el archivo: " + io.getMessage());
+                JOptionPane.showMessageDialog(null, "Hubo un error al abrir el archivo: " + io.getMessage());
             } 
         }
     }//GEN-LAST:event_itemUploadFileActionPerformed
@@ -268,17 +359,13 @@ public class ViewAnalyzer extends javax.swing.JFrame {
             statsMaths = sintax.getStatsMath();
             statsColor = sintax.getStatsColor();
             statsFigure = sintax.getStatsFigure();
-            Graphics graphics = new Graphics(figures, statsMaths, statsColor, statsFigure, filePath);
-            graphics.setVisible(true);
-            this.dispose();
-            for (int i = 0; i < lex.getErrorsLexicos().size() ; i++) {
-                System.out.println(lex.getErrorsLexicos().get(i).toString());
-            }
-
-            for (int i = 0; i < sintax.getErrors().size(); i++) {
-                System.out.println("Sintax: " + sintax.getErrors().get(i).toString());
-            }
-
+            ArrayList<ErrorL> lexerErrors = lex.getErrorsLexicos();
+            ArrayList<ErrorL> sintaxErrors = sintax.getErrors();
+            errors.addAll(sintaxErrors);
+            errors.addAll(lexerErrors);
+            messages = sintax.getMessages();
+            setTextConsole(messages);           
+            verifiedButtons();
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -287,13 +374,15 @@ public class ViewAnalyzer extends javax.swing.JFrame {
 
     private void itemColorUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemColorUsedActionPerformed
         // TODO add your handling code here:
-        ColorsUsedReport colorsUsedReport = new ColorsUsedReport(figures, statsMaths, statsColor, statsFigure, filePath);
+        text = textArea.getText();
+        ColorsUsedReport colorsUsedReport = new ColorsUsedReport(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
         colorsUsedReport.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemColorUsedActionPerformed
 
     private void itemNewFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNewFileActionPerformed
         // TODO add your handling code here:
+        
         JFileChooser jFileChooser = new JFileChooser();
         jFileChooser.setDialogTitle("Crear Archivo");
         jFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("TXT File", "txt"));
@@ -301,11 +390,10 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         int userSelection = jFileChooser.showSaveDialog(null);
 
         if(userSelection == JFileChooser.APPROVE_OPTION){
+            cleanAll();
             File file = jFileChooser.getSelectedFile();
             filePath = file.getAbsolutePath();
-            
             try (FileWriter fw = new FileWriter(file)){
-
                 fw.write("");
                 JOptionPane.showMessageDialog(this, "Archivo creado correctamente");
             } catch (IOException ex){
@@ -318,24 +406,86 @@ public class ViewAnalyzer extends javax.swing.JFrame {
 
     private void itemAnimationsUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAnimationsUsedActionPerformed
         // TODO add your handling code here:
-        AnimationUsedReport animationUsedReport = new AnimationUsedReport(figures, statsMaths, statsColor, statsFigure, filePath);
+        text = textArea.getText();
+        AnimationUsedReport animationUsedReport = new AnimationUsedReport(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
         animationUsedReport.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemAnimationsUsedActionPerformed
 
     private void itemObjectsUstedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemObjectsUstedActionPerformed
         // TODO add your handling code here:
-        ObjectsUsedReports objectsUsedReports = new ObjectsUsedReports(figures, statsMaths, statsColor, statsFigure, filePath);
+        text = textArea.getText();
+        ObjectsUsedReports objectsUsedReports = new ObjectsUsedReports(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
         objectsUsedReports.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemObjectsUstedActionPerformed
 
     private void itemOccurrenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOccurrenceActionPerformed
         // TODO add your handling code here:
-        OcurrenceReport ocurrenceReport = new OcurrenceReport(figures, statsMaths, statsColor, statsFigure, filePath);
+        text = textArea.getText();
+        OcurrenceReport ocurrenceReport = new OcurrenceReport(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
         ocurrenceReport.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemOccurrenceActionPerformed
+
+    private void itemErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemErrorsActionPerformed
+        // TODO add your handling code here:
+        text = textArea.getText();
+        ErrorsReport errorsReport = new ErrorsReport(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
+        errorsReport.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemErrorsActionPerformed
+
+    private void itemCleanIDEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCleanIDEActionPerformed
+        // TODO add your handling code here:
+        text = "";
+        textArea.setText("");
+    }//GEN-LAST:event_itemCleanIDEActionPerformed
+
+    private void itemCleanConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCleanConsoleActionPerformed
+        // TODO add your handling code here:
+        txtConsole.setText("");
+    }//GEN-LAST:event_itemCleanConsoleActionPerformed
+
+    private void itemCleanAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCleanAllActionPerformed
+        // TODO add your handling code here:
+        cleanAll();
+        JOptionPane.showMessageDialog(null, "Se ha limpiado todo");
+    }//GEN-LAST:event_itemCleanAllActionPerformed
+
+    private void itemGraficsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGraficsActionPerformed
+        // TODO add your handling code here:
+        text = textArea.getText();
+        Principal principal = new Principal(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
+        Graphics graphics = new Graphics(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
+        graphics.setBounds(0, 0, 1200, 800);
+        principal.setJpanelNew(graphics);
+        principal.getContentPane().add(graphics);
+        principal.pack();
+        principal.setVisible(true);
+        principal.revalidate();
+        principal.repaint();
+        this.dispose();
+    }//GEN-LAST:event_itemGraficsActionPerformed
+
+    private void itemSaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSaveFileActionPerformed
+        // TODO add your handling code here:
+        text = textArea.getText();
+        if(!filePath.equals("")){
+            File file = new File(filePath);
+            filePath = file.getAbsolutePath();
+            try (FileWriter fw = new FileWriter(file)){
+                fw.write(text);
+                JOptionPane.showMessageDialog(this, "Se han guardado los cambios correctamente");
+            } catch (IOException ex){
+                ex.printStackTrace();
+            }
+            cleanAll();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha abierto o creado ningun archivo.");
+        }
+        
+    }//GEN-LAST:event_itemSaveFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,8 +525,12 @@ public class ViewAnalyzer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCompiler;
     private javax.swing.JMenuItem itemAnimationsUsed;
+    private javax.swing.JMenuItem itemCleanAll;
+    private javax.swing.JMenuItem itemCleanConsole;
+    private javax.swing.JMenuItem itemCleanIDE;
     private javax.swing.JMenuItem itemColorUsed;
     private javax.swing.JMenuItem itemErrors;
+    private javax.swing.JMenuItem itemGrafics;
     private javax.swing.JMenuItem itemNewFile;
     private javax.swing.JMenuItem itemObjectsUsted;
     private javax.swing.JMenuItem itemOccurrence;
@@ -384,6 +538,7 @@ public class ViewAnalyzer extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemUploadFile;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -396,8 +551,6 @@ public class ViewAnalyzer extends javax.swing.JFrame {
     private javax.swing.JLabel txtLine;
     // End of variables declaration//GEN-END:variables
 
-    private void JOptionPane(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
 }

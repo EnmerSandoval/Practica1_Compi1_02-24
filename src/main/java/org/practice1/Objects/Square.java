@@ -1,6 +1,7 @@
 package org.practice1.Objects;
 
-import org.practice1.Objects.Panels.PanelSquare;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -9,12 +10,10 @@ import javax.script.ScriptException;
 public class Square extends Figure{
 
     private int lade;
-    private PanelSquare panelSquare;
 
     public Square(String name, int x, int y, int lade, String color) {
         super(name, x, y, color);
         this.lade = lade;
-        this.panelSquare = new PanelSquare(this);
     }
 
     public int getLade() {
@@ -23,14 +22,6 @@ public class Square extends Figure{
 
     public void setLade(int lade) {
         this.lade = lade;
-    }
-
-    public PanelSquare getPanelSquare() {
-        return panelSquare;
-    }
-
-    public void setPanelSquare(PanelSquare panelSquare) {
-        this.panelSquare = panelSquare;
     }
 
     @Override
@@ -42,5 +33,11 @@ public class Square extends Figure{
                 ", color= " + getColor()+
                 ", lade=" + lade +
                 '}';
+    }
+
+    @Override
+    public void draw(Graphics2D g2d) {
+        g2d.setColor(returnColor(getColor()));
+        g2d.fillRect(getX(), getY(), getLade(), getLade());
     }
 }

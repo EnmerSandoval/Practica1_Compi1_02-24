@@ -1,17 +1,15 @@
 package org.practice1.Objects;
 
-import org.practice1.Objects.Panels.PanelRectangle;
+import java.awt.Graphics2D;
 
 public class Rectangle extends Figure{
 
     private int high, wide;
-    private PanelRectangle panelRectangle;
 
     public Rectangle(String name, int x, int y, int high, int wide, String color){
         super(name, x, y, color);
         this.high = high;
         this.wide = wide;
-        this.panelRectangle = new PanelRectangle(this);
     }
 
     public int getHigh() {
@@ -30,14 +28,6 @@ public class Rectangle extends Figure{
         this.wide = wide;
     }
 
-    public PanelRectangle getPanelRectangle() {
-        return panelRectangle;
-    }
-
-    public void setPanelRectangle(PanelRectangle panelRectangle) {
-        this.panelRectangle = panelRectangle;
-    }
-
     @Override
     public String toString() {
         return "Rectangle{" +
@@ -48,5 +38,11 @@ public class Rectangle extends Figure{
                 "high=" + high +
                 ", wide=" + wide +
                 '}';
+    }
+
+    @Override
+    public void draw(Graphics2D g2d) {
+       g2d.setColor(returnColor(getColor()));
+       g2d.fillRect(getX(), getY(), getWide(), getHigh());   
     }
 }

@@ -1,26 +1,25 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package org.practice1.View;
 
-import org.practice1.Objects.Panels.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import org.practice1.Errors.ErrorL;
+import org.practice1.Objects.Figure;
 import org.practice1.Objects.*;
-import org.practice1.Objects.Polygon;
-import org.practice1.Objects.Rectangle;
 import org.practice1.Stats.StatsColor;
 import org.practice1.Stats.StatsFigure;
 import org.practice1.Stats.StatsMath;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  *
  * @author laptop
  */
-public class Graphics extends javax.swing.JFrame {
+public class Graphics extends javax.swing.JPanel {
 
     private String filePath = "";
     private String text = "";
@@ -28,49 +27,48 @@ public class Graphics extends javax.swing.JFrame {
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
+    private ArrayList<ErrorL> errors = new ArrayList<>();
+    private ArrayList<String> messages = new ArrayList<>();
 
     public Graphics() {
         initComponents();
-        setLocationRelativeTo(null);
-        setTitle("Graficas");
     }
 
-    public Graphics(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath) {
+    public Graphics(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath, String text, ArrayList<ErrorL> errors, ArrayList<String> messages) {
         initComponents();
-        setLocationRelativeTo(null);
-        setTitle("Graficas");
         this.figures = figures;
         this.statsMaths = statsMaths;
         this.statsColor = statsColor;
         this.statsFigure = statsFigure;
         this.filePath = filePath;
-        graphicsFigures(figures);
-    }
-
-    private void graphicsFigures(ArrayList<Figure> figures){
-        marco.removeAll();
-        marco.setLayout(new GridLayout(0, figures.size()));
-
+        this.setLayout(null);
+        System.out.println("Se ha llamado el constructor");
         for (int i = 0; i < figures.size(); i++) {
-            JPanel panelFigure = null;
-            if(figures.get(i) instanceof Square){
-                panelFigure = new PanelSquare((Square) figures.get(i));
-            } else if(figures.get(i) instanceof Circle){
-                panelFigure = new PanelCircle((Circle) figures.get(i));
-            } else if(figures.get(i) instanceof Line){
-                panelFigure = new PanelLine((Line) figures.get(i));
-            } else if(figures.get(i) instanceof Polygon) {
-                panelFigure = new PanelPolygon((Polygon) figures.get(i));
-            } else if(figures.get(i) instanceof Rectangle){
-                panelFigure = new PanelRectangle((Rectangle) figures.get(i));
-            }
-            if (panelFigure != null) {
-                marco.add(panelFigure);
-            }
+            System.out.println(figures.get(i).toString());
         }
-        marco.revalidate();
-        marco.repaint();
+        this.setBorder(BorderFactory.createLineBorder(Color.RED)); // Temporal para verificar visibilidad
+
+        revalidate();
+        repaint();
     }
+
+    @Override
+    protected void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g); 
+        Graphics2D g2d = (Graphics2D) g;
+        System.out.println("paintComponent called"); 
+        for (Figure figure : figures) {
+            System.out.println("Drawing figure: " + figure); 
+            figure.draw(g2d);
+        }
+   }
+    
+    
+    
+    /**
+     * Creates new form Graphics
+     */
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,71 +79,32 @@ public class Graphics extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        marco = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
 
-        javax.swing.GroupLayout marcoLayout = new javax.swing.GroupLayout(marco);
-        marco.setLayout(marcoLayout);
-        marcoLayout.setHorizontalGroup(
-            marcoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        marcoLayout.setVerticalGroup(
-            marcoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 680, Short.MAX_VALUE)
-        );
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(marco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 814, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(marco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Graphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Graphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Graphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Graphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Graphics().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JPanel marco;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }

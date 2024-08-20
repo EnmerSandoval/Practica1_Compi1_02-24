@@ -5,21 +5,26 @@
 package utils;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 
 /**
  *
  * @author laptop
  */
-public class    Util {
+public class Util {
  
     //Export to PNG
     public static void exportTableToPNG(JTable table){
@@ -87,8 +92,72 @@ public class    Util {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }        
+    }
+    
+    public static void exportPanelToPNG(JPanel panel) {
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setDialogTitle("Guardar como PNG");
+        jFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PNG Image", "png"));
+        int selection = jFileChooser.showSaveDialog(null);
+
+        if (selection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = jFileChooser.getSelectedFile();
+            String filePathTo = fileToSave.getAbsolutePath();
+
+            if (!filePathTo.endsWith(".png")) {
+                filePathTo += ".png";
+            }
+
+            try {
+                BufferedImage image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = image.createGraphics();
+                panel.paint(g2d);
+                g2d.dispose();
+                
+                ImageIO.write(image, "png", new File(filePathTo));
+                JOptionPane.showMessageDialog(null, "Se ha exportado a PNG correctamente");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        
-        
+    }
+    
+    public static void exportPanelToPDF(JPanel panel, String message) {
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setDialogTitle("Guardar como PDF");
+        jFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PDF Document", "pdf"));
+        int selection = jFileChooser.showSaveDialog(null);
+
+        if (selection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = jFileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+
+            if (!filePath.endsWith(".pdf")) {
+                filePath += ".pdf";
+            }
+
+            Document document = new Document();
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(filePath));
+                document.open();
+
+                // Convertir JPanel a BufferedImage
+                BufferedImage image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = image.createGraphics();
+                panel.paint(g2d);
+                g2d.dispose();
+
+                // Convertir BufferedImage a Image para iText
+                Image pdfImage = Image.getInstance(image, null);
+                document.add(pdfImage);
+                document.addTitle(message);
+                document.close();
+
+                JOptionPane.showMessageDialog(null, "Se ha exportado como PDF exitosamente");
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

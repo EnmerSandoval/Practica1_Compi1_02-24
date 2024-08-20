@@ -4,19 +4,64 @@
  */
 package org.practice1.View;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import org.practice1.Errors.ErrorL;
+import org.practice1.Objects.Figure;
+import org.practice1.Stats.StatsColor;
+import org.practice1.Stats.StatsFigure;
+import org.practice1.Stats.StatsMath;
+import utils.Util;
+
 /**
  *
  * @author laptop
  */
 public class ErrorsReport extends javax.swing.JFrame {
+    private String filePath = "";
+    private String text = "";
+    private ArrayList<Figure> figures = new ArrayList<>();
+    private ArrayList<StatsMath> statsMaths = new ArrayList<>();
+    private ArrayList<ErrorL> errors = new ArrayList<>();
+    private ArrayList<String> messages = new ArrayList<>();
+    private StatsColor statsColor = new StatsColor();
+    private StatsFigure statsFigure = new StatsFigure();
 
     /**
      * Creates new form OcurrenceReport
      */
+    
+    
+    
     public ErrorsReport() {
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Reporte de errores");
     }
 
+    public ErrorsReport(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath, String text, ArrayList<ErrorL> errors, ArrayList<String> messages){
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Reporte de errores");
+        this.figures = figures;
+        this.statsMaths = statsMaths;
+        this.statsColor = statsColor;
+        this.statsFigure = statsFigure;
+        this.filePath = filePath;
+        this.text = text;
+        this.errors = errors;
+        this.messages = messages;
+        loadToData(errors);
+    }
+    
+    private void loadToData(ArrayList<ErrorL> errors){
+        DefaultTableModel defaultTableModel = (DefaultTableModel)(jTable1.getModel());
+        defaultTableModel.setNumRows(0);
+            for (int i = 0; i < errors.size(); i++) {
+                defaultTableModel.addRow(new Object[]{errors.get(i).getLexema(), errors.get(i).getLine(),
+                        errors.get(i).getColumn(), errors.get(i).getType(), errors.get(i).getDescription()});
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,11 +74,11 @@ public class ErrorsReport extends javax.swing.JFrame {
         labelTextArea = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        buttonSuccess = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        exportToPNG = new javax.swing.JMenuItem();
+        exportToPDF = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,20 +106,30 @@ public class ErrorsReport extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonSuccess.setText("Aceptar");
+        buttonSuccess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonSuccessActionPerformed(evt);
             }
         });
 
         jMenu1.setText("Exportar");
 
-        jMenuItem1.setText("Exportar a PNG");
-        jMenu1.add(jMenuItem1);
+        exportToPNG.setText("Exportar a PNG");
+        exportToPNG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportToPNGActionPerformed(evt);
+            }
+        });
+        jMenu1.add(exportToPNG);
 
-        jMenuItem2.setText("Exportar a PDF");
-        jMenu1.add(jMenuItem2);
+        exportToPDF.setText("Exportar a PDF");
+        exportToPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportToPDFActionPerformed(evt);
+            }
+        });
+        jMenu1.add(exportToPDF);
 
         jMenuBar1.add(jMenu1);
 
@@ -88,7 +143,7 @@ public class ErrorsReport extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(333, 333, 333)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(buttonSuccess, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -105,16 +160,29 @@ public class ErrorsReport extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addComponent(buttonSuccess, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buttonSuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSuccessActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        ViewAnalyzer viewAnalyzer = new ViewAnalyzer(figures, statsMaths, statsColor, statsFigure, filePath, text, errors, messages);
+        viewAnalyzer.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonSuccessActionPerformed
+
+    private void exportToPNGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportToPNGActionPerformed
+        // TODO add your handling code here:
+        Util.exportTableToPNG(jTable1);
+    }//GEN-LAST:event_exportToPNGActionPerformed
+
+    private void exportToPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportToPDFActionPerformed
+        // TODO add your handling code here:
+        Util.exportTableToPDF(jTable1, "Reporte de errores");
+    }//GEN-LAST:event_exportToPDFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,11 +221,11 @@ public class ErrorsReport extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton buttonSuccess;
+    private javax.swing.JMenuItem exportToPDF;
+    private javax.swing.JMenuItem exportToPNG;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTextArea;
