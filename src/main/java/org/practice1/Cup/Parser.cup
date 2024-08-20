@@ -4,6 +4,7 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import org.practice1.Objects.*;
 import org.practice1.Stats.*;
+import org.practice1.Errors.*;
 
 class Parser;
 
@@ -11,6 +12,7 @@ parser code{:
     private ArrayList<ErrorL> errors = new ArrayList<ErrorL>();
     private ArrayList<Figure> figures = new ArrayList<Figure>();
     private ArrayList<StatsMath> statsMaths = new ArrayList<StatsMath>();
+    private ArrayList<String> messages = new ArrayList<String>();
     private StatsColor statsColor = new StatsColor();
     private StatsFigure statsFigure = new StatsFigure();
     private Figure previousFigure = new Figure();
@@ -33,6 +35,10 @@ parser code{:
 
     public ArrayList<ErrorL> getErrors(){
         return this.errors;
+    }
+
+    public ArrayList<String> getMessages(){
+        return this.messages;
     }
 
     public void syntax_error(Symbol s){
@@ -91,73 +97,126 @@ start with in;
 
 in::= GRAPH figures in
     | ANIMATE animation in
-    | error in
+    | error:error in
+    {:
+        int line = errorleft;
+        int column = errorright;
+        String errorMessage = (error != null) ? error.toString() : "Error no especificado";
+        errors.add(new ErrorL(errorMessage, line, column, "Sintáctico", "Se esperaba un graficar o animar"));
+        parser.report_error("Error de sincronización. Buscando un token válido...", null);
+    :}
     | //vacio
     ;
 
-figures::= CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:radio
+figures::= CIRCLE:CIRCLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:radio
            COMMA colors:color RPAREN
            {:
+           if (name != null && x != null && y != null && radio != null && color != null){
             Circle circle = new Circle(name.toString(), x, y, radio, color.toString());
-            figures.add(circle);
-            previousFigure = circle;
-            statsFigure.setCircle(statsFigure.getCircle()+1);
-            RESULT = circle;
+                       figures.add(circle);
+                       previousFigure = circle;
+                       statsFigure.setCircle(statsFigure.getCircle()+1);
+                       RESULT = circle;
+           } else{
+               int line = CIRCLEleft;
+               int column = CIRCLEright;
+               messages.add("No se coumplieron los parametros para crear un circulo linea: " + line + " columna: " + column);
+               RESULT = null;
+           }
+
            :}
-         | SQUARE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:lade
+         | SQUARE:SQUARE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:lade
            COMMA colors:color RPAREN
            {:
+           if(name != null && x != null && y != null && color != null){
             Square square = new Square(name.toString(), x, y, lade, color.toString());
             figures.add(square);
             previousFigure = square;
             statsFigure.setSquare(statsFigure.getSquare()+1);
             RESULT = square;
+           } else {
+            int line = SQUAREleft;
+            int column = SQUAREright;
+            messages.add("No se cumplieron los parametros para crear un cuadrado linea: " + line + " columna: " + column);
+            RESULT = null;
+           }
            :}
-
-         | RECTANGLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA
+         | RECTANGLE:RECTANGLE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA
            expresion_list:high COMMA expresion_list:wide COMMA colors:color RPAREN
            {:
+           if(name != null && x != null && y != null && color != null){
             Rectangle rectangle = new Rectangle(name.toString(), x, y, high, wide, color.toString());
             figures.add(rectangle);
             previousFigure = rectangle;
             statsFigure.setRectangle(statsFigure.getRectangle()+1);
             RESULT = rectangle;
+           } else {
+            int line = RECTANGLEleft;
+            int column = RECTANGLEright;
+            messages.add("No se cumplieron los parametros para crear un rectangulo linea: " + line + " columna: "+ column);
+            RESULT = null;
+           }
            :}
-
-         | LINE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:x2
+         | LINE:LINE LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA expresion_list:x2
            COMMA expresion_list:y2 COMMA colors:color RPAREN
            {:
+           if(name != null && x != null && y != null && x2 != null && y2 != null && color != null){
              Line lineResult = new Line(name.toString(), x, y, x2, y2, color.toString());
              figures.add(lineResult);
              previousFigure = lineResult;
              statsFigure.setLine(statsFigure.getLine()+1);
              RESULT = lineResult;
+           } else {
+             int line = LINEleft;
+             int column = LINEright;
+             messages.add("No se cumplieron los parametros para crear una linea error linea: " + line + " columna: "+ column);
+             RESULT = null;
+           }
            :}
 
-         | POLYGON LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA
+         | POLYGON:POLYGON LPAREN NAME:name COMMA expresion_list:x COMMA expresion_list:y COMMA
            expresion_list:counterLades COMMA expresion_list:high COMMA expresion_list:wide COMMA
            colors:color RPAREN
            {:
+           if(name != null && x != null && y != null && counterLades != null && high != null && wide != null
+           && color != null){
              Polygon polygon = new Polygon(name.toString(), x, y, counterLades, high, wide, color.toString());
              figures.add(polygon);
              previousFigure = polygon;
              statsFigure.setPolygon(statsFigure.getPolygon()+1);
              RESULT = polygon;
+           } else {
+            int line = POLYGONleft;
+            int column = POLYGONright;
+            messages.add("No se cumplieron los parametros para crear un poligono linea: " + line + " columna: " + column);
+            RESULT = null;
+           }
            :}
          ;
 
-animation::= OBJECTO PREVIOUS LPAREN animations:animations COMMA expresion_list:x COMMA expresion_list:y
+animation::= OBJECTO:OBJECTO PREVIOUS LPAREN animations:animations COMMA expresion_list:x COMMA expresion_list:y
              COMMA expresion_list:order RPAREN
-             {:Animation animationResult = new Animation(animations.toString(), x, y, order);
-                if(previousFigure != null){
-                    System.out.println(previousFigure.toString());
-                    previousFigure.setAnimation(animationResult);
-                    previousFigure = null;
+             {:
+                if(animations != null && x != null && y != null && order != null){
+                    Animation animationResult = new Animation(animations.toString(), x, y, order);
+                    if(previousFigure != null){
+                        previousFigure.setAnimation(animationResult);
+                        previousFigure = null;
+                    } else {
+                        System.out.println("No existe un objeto anterior");
+                    }
+                    RESULT = animationResult;
                 } else {
-                    System.out.println("No existe un objeto anterior");
+                    int line = OBJECTOleft;
+                    int column = OBJECTOright;
+                    messages.add("No se cumplieron los parametros para generar una animacion linea: " + line + " columna: " + column);
+                    RESULT = null;
                 }
 
-               RESULT = animationResult;
+             :}
+             | error:e
+             {:
+
              :}
              ;
 
@@ -171,45 +230,58 @@ animations::= LINE:line
                 statsFigure.setCurveAnimation(statsFigure.getCurveAnimation()+1);
                 RESULT = curve.toString();
               :}
+            | error:e
+            {:
+                int line = eleft;
+                int column = eright;
+                error.add(new ErrorL("error", line, column, "Sintactico", "Se esperaba linea o columna"));
+            :}
             ;
 
-expresion_list::= expr:expr {:RESULT = expr;:};
+expresion_list::= expr:expr {:RESULT = expr;:}
+                | error:e
+                {:
+                    int line = eleft;
+                    int column = eright;
+                    errors.add(new ErrorL("error", line, column, "Sintactico", "Se esperaba una expresion matematica"));
+                :}
+                ;
 
 
 expr::= LPAREN expr:expr RPAREN            {: RESULT = expr; :}
       |  expr:expr1 PLUS:PLUS expr:expr2
         {:
-           // int line = ((Symbol)PLUS).left;
-            //int column = ((Symbol)PLUS).right;
+            int line = PLUSleft;
+            int column = PLUSright + 1;
             String occurrence = expr1.toString() + "+" + expr2.toString();
-            StatsMath statsMath = new StatsMath("+", ""+0, ""+1, occurrence);
+            StatsMath statsMath = new StatsMath("+", ""+column, ""+line, occurrence);
             statsMaths.add(statsMath);
             RESULT = (expr1.intValue() + expr2.intValue());
         :}
       | expr:expr1 MINUS:MINUS expr:expr2
         {:
-//            int line = ((Symbol)MINUS).left;
-//            int column = ((Symbol)MINUS).right;
+            int line = MINUSleft;
+            int column = MINUSright + 1;
             String occurrence = expr1.toString() + "-" + expr2.toString();
-            StatsMath statsMath = new StatsMath("-", ""+0, ""+0, occurrence);
+            StatsMath statsMath = new StatsMath("-", ""+column, ""+line, occurrence);
             statsMaths.add(statsMath);
             RESULT = (expr1.intValue() - expr2.intValue());
         :}
       | expr:expr1 ASTHERISK:ASTHERISK expr:expr2
         {:
-//            int line = ((Symbol)ASTHERISK).left;
-//            int column = ((Symbol)ASTHERISK).right;
+            int line = ASTHERISKleft;
+            int column = ASTHERISKright + 1;
             String occurrence = expr1.toString() + "*" + expr2.toString();
-            StatsMath statsMath = new StatsMath("*", ""+1, ""+0, occurrence);
+            StatsMath statsMath = new StatsMath("*", ""+column, ""+line, occurrence);
             statsMaths.add(statsMath);
             RESULT = (expr1.intValue() * expr2.intValue());
         :}
       | expr:expr1 DIVISION:DIVISION expr:expr2
         {:
-//            int line = ((Symbol)DIVISION).left;
-//            int column = ((Symbol)DIVISION).right;
+            int line = DIVISIONleft;
+            int column = DIVISIONright + 1;
             String occurrence = expr1.toString() + "/" + expr2.toString();
-            StatsMath statsMath = new StatsMath("/", ""+1, ""+1, occurrence);
+            StatsMath statsMath = new StatsMath("/", ""+column, ""+line, occurrence);
             statsMaths.add(statsMath);
             RESULT = (expr1.intValue() / expr2.intValue());
         :}
@@ -265,4 +337,11 @@ colors::= BLUE:blue
             statsColor.setBlack(statsColor.getBlack()+1);
             RESULT = black.toString();
           :}
+        | error:e
+           {:
+            int line = (eleft)+1;
+            int column = eright;
+            errors.add(new ErrorL("error", line, column, "Sintactico", "Se esperaba un color" ));
+            RESULT = null;
+           :}
         ;

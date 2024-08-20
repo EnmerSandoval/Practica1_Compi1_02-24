@@ -10,7 +10,6 @@ public class PanelSquare extends JPanel {
 
     public PanelSquare(Square square) {
         this.square = square;
-        System.out.println(square.getLade());
         this.setPreferredSize(new java.awt.Dimension(square.getLade(), square.getLade()));
     }
 
@@ -20,7 +19,6 @@ public class PanelSquare extends JPanel {
         Color color = square.returnColor(square.getColor());
         g.setColor(color);
 
-        
         g.fillRect(square.getX(), square.getY(), square.getLade(),square.getLade());
         
         FontMetrics fm = g.getFontMetrics();

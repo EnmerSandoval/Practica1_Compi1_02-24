@@ -398,11 +398,10 @@ public class Lexer implements java_cup.runtime.Scanner {
         private Symbol symbol(int type, Object value){
             return new Symbol(type, yyline+1, yycolumn+1, value);
         }
-/*
-        private addError(String message){
-            errors.add(new ErrorL(yyline+1, yycolumn+1, "No se reconoce este simbolo", 0, message));
+
+        public ArrayList<ErrorL> getErrorsLexicos(){
+            return this.errors;
         }
-*/
 
 
   /**
@@ -830,7 +829,7 @@ public class Lexer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { /*addError(yytext());*/
+            { errors.add(new ErrorL(yytext(), yyline, yycolumn, "Error Lexico", "Este caracter no es aceptado en nuestro alfabeto"));
             }
           // fall through
           case 32: break;
@@ -860,7 +859,7 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 37: break;
           case 7:
-            { return new Symbol(ParserSym.COMMA, yytext());
+            { return new Symbol(ParserSym.COMMA, yyline, yycolumn, yytext());
             }
           // fall through
           case 38: break;
@@ -875,112 +874,112 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 40: break;
           case 10:
-            { return new Symbol(ParserSym.NUMBER, yytext());
+            { return new Symbol(ParserSym.NUMBER, yyline, yycolumn, yytext());
             }
           // fall through
           case 41: break;
           case 11:
-            { return new Symbol(ParserSym.NAME, yytext());
+            { return new Symbol(ParserSym.NAME, yyline, yycolumn, yytext());
             }
           // fall through
           case 42: break;
           case 12:
-            { return new Symbol(ParserSym.REAL, yytext());
+            { return new Symbol(ParserSym.REAL, yyline, yycolumn, yytext());
             }
           // fall through
           case 43: break;
           case 13:
-            { return new Symbol(ParserSym.BLUE, yytext());
+            { return new Symbol(ParserSym.BLUE, yycolumn, yyline, yytext());
             }
           // fall through
           case 44: break;
           case 14:
-            { return new Symbol(ParserSym.GRAY, yytext());
+            { return new Symbol(ParserSym.GRAY, yycolumn, yyline, yytext());
             }
           // fall through
           case 45: break;
           case 15:
-            { return new Symbol(ParserSym.RED, yytext());
+            { return new Symbol(ParserSym.RED, yycolumn, yyline, yytext());
             }
           // fall through
           case 46: break;
           case 16:
-            { return new Symbol(ParserSym.CURVE, yytext());
+            { return new Symbol(ParserSym.CURVE, yycolumn, yyline, yytext());
             }
           // fall through
           case 47: break;
           case 17:
-            { return new Symbol(ParserSym.LINE, yytext());
+            { return new Symbol(ParserSym.LINE, yycolumn, yyline, yytext());
             }
           // fall through
           case 48: break;
           case 18:
-            { return new Symbol(ParserSym.BLACK, yytext());
+            { return new Symbol(ParserSym.BLACK, yycolumn, yyline, yytext());
             }
           // fall through
           case 49: break;
           case 19:
-            { return new Symbol(ParserSym.GREEN, yytext());
+            { return new Symbol(ParserSym.GREEN, yycolumn, yyline, yytext());
             }
           // fall through
           case 50: break;
           case 20:
-            { return new Symbol(ParserSym.ANIMATE, yytext());
+            { return new Symbol(ParserSym.ANIMATE, yycolumn, yyline, yytext());
             }
           // fall through
           case 51: break;
           case 21:
-            { return new Symbol(ParserSym.OBJECTO, yytext());
+            { return new Symbol(ParserSym.OBJECTO, yycolumn, yyline, yytext());
             }
           // fall through
           case 52: break;
           case 22:
-            { return new Symbol(ParserSym.PINK, yytext());
+            { return new Symbol(ParserSym.PINK, yycolumn, yyline, yytext());
             }
           // fall through
           case 53: break;
           case 23:
-            { return new Symbol(ParserSym.CYAN, yytext());
+            { return new Symbol(ParserSym.CYAN, yycolumn, yyline, yytext());
             }
           // fall through
           case 54: break;
           case 24:
-            { return new Symbol(ParserSym.CIRCLE, yytext());
+            { return new Symbol(ParserSym.CIRCLE, yycolumn, yyline, yytext());
             }
           // fall through
           case 55: break;
           case 25:
-            { return new Symbol(ParserSym.ORANGE, yytext());
+            { return new Symbol(ParserSym.ORANGE, yycolumn, yyline, yytext());
             }
           // fall through
           case 56: break;
           case 26:
-            { return new Symbol(ParserSym.YELLOW, yytext());
+            { return new Symbol(ParserSym.YELLOW, yycolumn, yyline, yytext());
             }
           // fall through
           case 57: break;
           case 27:
-            { return new Symbol(ParserSym.PREVIOUS, yytext());
+            { return new Symbol(ParserSym.PREVIOUS, yycolumn, yyline, yytext());
             }
           // fall through
           case 58: break;
           case 28:
-            { return new Symbol(ParserSym.SQUARE, yytext());
+            { return new Symbol(ParserSym.SQUARE, yycolumn, yyline, yytext());
             }
           // fall through
           case 59: break;
           case 29:
-            { return new Symbol(ParserSym.GRAPH, yytext());
+            { return new Symbol(ParserSym.GRAPH, yycolumn, yyline, yytext());
             }
           // fall through
           case 60: break;
           case 30:
-            { return new Symbol(ParserSym.POLYGON, yytext());
+            { return new Symbol(ParserSym.POLYGON, yycolumn, yyline, yytext());
             }
           // fall through
           case 61: break;
           case 31:
-            { return new Symbol(ParserSym.RECTANGLE, yytext());
+            { return new Symbol(ParserSym.RECTANGLE, yycolumn, yyline, yytext());
             }
           // fall through
           case 62: break;

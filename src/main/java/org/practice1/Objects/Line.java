@@ -1,13 +1,17 @@
 package org.practice1.Objects;
 
+import org.practice1.Objects.Panels.PanelLine;
+
 public class Line extends Figure{
 
     private int x2, y2;
+    private PanelLine panelLine;
 
     public Line(String name, int x, int y, int x2, int y2, String color){
         super(name, x, y, color);
         this.x2 = x2;
         this.y2 = y2;
+        this.panelLine = new PanelLine(this);
     }
 
     public int getX2() {
@@ -32,6 +36,14 @@ public class Line extends Figure{
 
     public int dimensionWidth(){
         return x2 + y2;
+    }
+
+    public PanelLine getPanelLine() {
+        return panelLine;
+    }
+
+    public void setPanelLine(PanelLine panelLine) {
+        this.panelLine = panelLine;
     }
 
     @Override

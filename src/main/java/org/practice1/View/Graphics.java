@@ -4,16 +4,72 @@
  */
 package org.practice1.View;
 
+import org.practice1.Objects.Panels.*;
+import org.practice1.Objects.*;
+import org.practice1.Objects.Polygon;
+import org.practice1.Objects.Rectangle;
+import org.practice1.Stats.StatsColor;
+import org.practice1.Stats.StatsFigure;
+import org.practice1.Stats.StatsMath;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author laptop
  */
 public class Graphics extends javax.swing.JFrame {
 
+    private String filePath = "";
+    private String text = "";
+    private ArrayList<Figure> figures = new ArrayList<>();
+    private ArrayList<StatsMath> statsMaths = new ArrayList<>();
+    private StatsColor statsColor = new StatsColor();
+    private StatsFigure statsFigure = new StatsFigure();
+
     public Graphics() {
         initComponents();
         setLocationRelativeTo(null);
-        
+        setTitle("Graficas");
+    }
+
+    public Graphics(ArrayList<Figure> figures, ArrayList<StatsMath> statsMaths, StatsColor statsColor, StatsFigure statsFigure, String filePath) {
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Graficas");
+        this.figures = figures;
+        this.statsMaths = statsMaths;
+        this.statsColor = statsColor;
+        this.statsFigure = statsFigure;
+        this.filePath = filePath;
+        graphicsFigures(figures);
+    }
+
+    private void graphicsFigures(ArrayList<Figure> figures){
+        marco.removeAll();
+        marco.setLayout(new GridLayout(0, figures.size()));
+
+        for (int i = 0; i < figures.size(); i++) {
+            JPanel panelFigure = null;
+            if(figures.get(i) instanceof Square){
+                panelFigure = new PanelSquare((Square) figures.get(i));
+            } else if(figures.get(i) instanceof Circle){
+                panelFigure = new PanelCircle((Circle) figures.get(i));
+            } else if(figures.get(i) instanceof Line){
+                panelFigure = new PanelLine((Line) figures.get(i));
+            } else if(figures.get(i) instanceof Polygon) {
+                panelFigure = new PanelPolygon((Polygon) figures.get(i));
+            } else if(figures.get(i) instanceof Rectangle){
+                panelFigure = new PanelRectangle((Rectangle) figures.get(i));
+            }
+            if (panelFigure != null) {
+                marco.add(panelFigure);
+            }
+        }
+        marco.revalidate();
+        marco.repaint();
     }
 
     /**

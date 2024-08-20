@@ -1,13 +1,17 @@
 package org.practice1.Objects;
 
+import org.practice1.Objects.Panels.PanelRectangle;
+
 public class Rectangle extends Figure{
 
     private int high, wide;
+    private PanelRectangle panelRectangle;
 
     public Rectangle(String name, int x, int y, int high, int wide, String color){
         super(name, x, y, color);
         this.high = high;
         this.wide = wide;
+        this.panelRectangle = new PanelRectangle(this);
     }
 
     public int getHigh() {
@@ -24,6 +28,14 @@ public class Rectangle extends Figure{
 
     public void setWide(int wide) {
         this.wide = wide;
+    }
+
+    public PanelRectangle getPanelRectangle() {
+        return panelRectangle;
+    }
+
+    public void setPanelRectangle(PanelRectangle panelRectangle) {
+        this.panelRectangle = panelRectangle;
     }
 
     @Override

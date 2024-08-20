@@ -1,12 +1,16 @@
 package org.practice1.Objects;
 
+import org.practice1.Objects.Panels.PanelCircle;
+
 public class Circle extends Figure{
     private int radio;
     private final double pi = 3.1416;
+    private PanelCircle panelCircle;
 
     public Circle(String name, int x, int y, int radio,  String color) {
         super(name, x, y, color);
         this.radio = radio;
+        panelCircle = new PanelCircle(this);
     }
 
     public int getRadio() {
@@ -27,6 +31,14 @@ public class Circle extends Figure{
 
     public int getDiameter(int radio){
         return getRadio()*getRadio();
+    }
+
+    public PanelCircle getPanelCircle() {
+        return panelCircle;
+    }
+
+    public void setPanelCircle(PanelCircle panelCircle) {
+        this.panelCircle = panelCircle;
     }
 
     @Override

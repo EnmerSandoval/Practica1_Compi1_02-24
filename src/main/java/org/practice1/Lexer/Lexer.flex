@@ -77,11 +77,10 @@ NAME            = ({LETTER}|_)+({LETTER}|{DIGIT}|_)*
         private Symbol symbol(int type, Object value){
             return new Symbol(type, yyline+1, yycolumn+1, value);
         }
-/*
-        private addError(String message){
-            errors.add(new ErrorL(yyline+1, yycolumn+1, "No se reconoce este simbolo", 0, message));
+
+        public ArrayList<ErrorL> getErrorsLexicos(){
+            return this.errors;
         }
-*/
 %}
 
 %eofval{
@@ -91,10 +90,10 @@ NAME            = ({LETTER}|_)+({LETTER}|{DIGIT}|_)*
 %%
 
 //Instructions
-{GRAPH}                  {return new Symbol(ParserSym.GRAPH, yytext());}
-{ANIMATE}                {return new Symbol(ParserSym.ANIMATE, yytext());}
-{OBJECTO}                {return new Symbol(ParserSym.OBJECTO, yytext());}
-{PREVIOUS}               {return new Symbol(ParserSym.PREVIOUS, yytext());}
+{GRAPH}                  {return new Symbol(ParserSym.GRAPH, yycolumn, yyline, yytext());}
+{ANIMATE}                {return new Symbol(ParserSym.ANIMATE, yycolumn, yyline, yytext());}
+{OBJECTO}                {return new Symbol(ParserSym.OBJECTO, yycolumn, yyline, yytext());}
+{PREVIOUS}               {return new Symbol(ParserSym.PREVIOUS, yycolumn, yyline, yytext());}
 
 //Operators
 {PLUS}                   {return new Symbol(ParserSym.PLUS, yycolumn, yyline, yytext());}
@@ -105,32 +104,32 @@ NAME            = ({LETTER}|_)+({LETTER}|{DIGIT}|_)*
 {RPAREN}                 {return new Symbol(ParserSym.RPAREN, yycolumn, yyline, yytext());}
 
 //Colors
-{BLUE}                   {return new Symbol(ParserSym.BLUE, yytext());}
-{RED}                    {return new Symbol(ParserSym.RED, yytext());}
-{YELLOW}                 {return new Symbol(ParserSym.YELLOW, yytext());}
-{GREEN}                  {return new Symbol(ParserSym.GREEN, yytext());}
-{ORANGE}                 {return new Symbol(ParserSym.ORANGE, yytext());}
-{GRAY}                   {return new Symbol(ParserSym.GRAY, yytext());}
-{CYAN}                   {return new Symbol(ParserSym.CYAN, yytext());}
-{PINK}                   {return new Symbol(ParserSym.PINK, yytext());}
-{BLACK}                  {return new Symbol(ParserSym.BLACK, yytext());}
+{BLUE}                   {return new Symbol(ParserSym.BLUE, yycolumn, yyline, yytext());}
+{RED}                    {return new Symbol(ParserSym.RED, yycolumn, yyline, yytext());}
+{YELLOW}                 {return new Symbol(ParserSym.YELLOW, yycolumn, yyline, yytext());}
+{GREEN}                  {return new Symbol(ParserSym.GREEN, yycolumn, yyline, yytext());}
+{ORANGE}                 {return new Symbol(ParserSym.ORANGE, yycolumn, yyline, yytext());}
+{GRAY}                   {return new Symbol(ParserSym.GRAY, yycolumn, yyline, yytext());}
+{CYAN}                   {return new Symbol(ParserSym.CYAN, yycolumn, yyline, yytext());}
+{PINK}                   {return new Symbol(ParserSym.PINK, yycolumn, yyline, yytext());}
+{BLACK}                  {return new Symbol(ParserSym.BLACK, yycolumn, yyline, yytext());}
 
 //Type Animations
-{CURVE}                  {return new Symbol(ParserSym.CURVE, yytext());}
+{CURVE}                  {return new Symbol(ParserSym.CURVE, yycolumn, yyline, yytext());}
 
 //Objects
-{CIRCLE}                 {return new Symbol(ParserSym.CIRCLE, yytext());}
-{SQUARE}                 {return new Symbol(ParserSym.SQUARE, yytext());}
-{RECTANGLE}              {return new Symbol(ParserSym.RECTANGLE, yytext());}
-{LINE}                   {return new Symbol(ParserSym.LINE, yytext());}
-{POLYGON}                {return new Symbol(ParserSym.POLYGON, yytext());}
+{CIRCLE}                 {return new Symbol(ParserSym.CIRCLE, yycolumn, yyline, yytext());}
+{SQUARE}                 {return new Symbol(ParserSym.SQUARE, yycolumn, yyline, yytext());}
+{RECTANGLE}              {return new Symbol(ParserSym.RECTANGLE, yycolumn, yyline, yytext());}
+{LINE}                   {return new Symbol(ParserSym.LINE, yycolumn, yyline, yytext());}
+{POLYGON}                {return new Symbol(ParserSym.POLYGON, yycolumn, yyline, yytext());}
 
 //Comma, numbers and white spaces
-{COMMA}                  {return new Symbol(ParserSym.COMMA, yytext());}
-{NUMBER}                 {return new Symbol(ParserSym.NUMBER, yytext());}
-{REAL}                   {return new Symbol(ParserSym.REAL, yytext());}
-{NAME}                   {return new Symbol(ParserSym.NAME, yytext());}
+{COMMA}                  {return new Symbol(ParserSym.COMMA, yyline, yycolumn, yytext());}
+{NUMBER}                 {return new Symbol(ParserSym.NUMBER, yyline, yycolumn, yytext());}
+{REAL}                   {return new Symbol(ParserSym.REAL, yyline, yycolumn, yytext());}
+{NAME}                   {return new Symbol(ParserSym.NAME, yyline, yycolumn, yytext());}
 {WHITESPCS}              {/*ignore*/}
 
 //Errors
-[^]                      {/*addError(yytext());*/}
+[^]                      {errors.add(new ErrorL(yytext(), yyline, yycolumn, "Error Lexico", "Este caracter no es aceptado en nuestro alfabeto"));}

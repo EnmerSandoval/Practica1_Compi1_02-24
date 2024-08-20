@@ -29,6 +29,7 @@ import org.practice1.Stats.*;
  */
 public class ViewAnalyzer extends javax.swing.JFrame {
     private String filePath = "";
+    private String text = "";
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<StatsMath> statsMaths = new ArrayList<>();
     private StatsColor statsColor = new StatsColor();
@@ -262,16 +263,21 @@ public class ViewAnalyzer extends javax.swing.JFrame {
         try{
             Lexer lex = new Lexer(new StringReader(textArea.getText()));
             Parser sintax = new Parser(lex);
-            String text = sintax.parse().toString();
+            sintax.parse();
             figures = sintax.getFigures();
             statsMaths = sintax.getStatsMath();
             statsColor = sintax.getStatsColor();
             statsFigure = sintax.getStatsFigure();
-            
-            txtConsole.setText(text);
-            
-            
-            
+            Graphics graphics = new Graphics(figures, statsMaths, statsColor, statsFigure, filePath);
+            graphics.setVisible(true);
+            this.dispose();
+            for (int i = 0; i < lex.getErrorsLexicos().size() ; i++) {
+                System.out.println(lex.getErrorsLexicos().get(i).toString());
+            }
+
+            for (int i = 0; i < sintax.getErrors().size(); i++) {
+                System.out.println("Sintax: " + sintax.getErrors().get(i).toString());
+            }
 
         }catch(Exception ex){
             ex.printStackTrace();

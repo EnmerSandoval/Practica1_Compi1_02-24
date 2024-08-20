@@ -1,15 +1,19 @@
 package org.practice1.Objects;
 
+import org.practice1.Objects.Panels.PanelPolygon;
+
 public class Polygon extends Figure{
 
     private int numberLades;
     private int high, wide;
+    private PanelPolygon panelPolygon;
 
     public Polygon(String name, int x, int y, int numberLades, int high, int wide, String color ) {
         super(name, x, y, color);
         this.numberLades = numberLades;
         this.high = high;
         this.wide = wide;
+        this.panelPolygon = new PanelPolygon(this);
     }
 
     public int getNumberLades() {
@@ -34,6 +38,14 @@ public class Polygon extends Figure{
 
     public void setWide(int wide) {
         this.wide = wide;
+    }
+
+    public PanelPolygon getPanelPolygon() {
+        return panelPolygon;
+    }
+
+    public void setPanelPolygon(PanelPolygon panelPolygon) {
+        this.panelPolygon = panelPolygon;
     }
 
     @Override
